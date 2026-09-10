@@ -24,9 +24,29 @@
         content="Pixadu is a modern browser gaming platform where you can play free games online, including 3D, arcade and PC games without downloads.">
 
     <link rel="canonical" href="https://pixadu.github.io/">
+    <!-- Pixadu organization and founder structured data -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://pixadu.github.io/#organization",
+  "name": "Pixadu",
+  "url": "https://pixadu.github.io/",
+  "logo": "https://pixadu.github.io/favicon.ico",
+  "founder": {
+    "@type": "Person",
+    "@id": "https://pixadu.github.io/about.html#deepak-sharma",
+    "name": "Deepak Sharma",
+    "jobTitle": "Founder & Developer of Pixadu",
+    "url": "https://pixadu.github.io/about.html",
+    "image": "https://pixadu.github.io/images/my.png"
+  }
+}
+</script>
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Pixadu - Play Free Browser Games Online">
-    <meta property="og:description" content="Play free browser games online on Pixadu, including arcade, 3D and PC games without downloads.">
+    <meta property="og:description"
+        content="Play free browser games online on Pixadu, including arcade, 3D and PC games without downloads.">
     <meta property="og:url" content="https://pixadu.github.io/">
 
     <!-- CSS -->
@@ -49,11 +69,13 @@
             opacity: 0;
             visibility: hidden;
         }
+
         .coverflow-stage.coverflow-ready {
             opacity: 1;
             visibility: visible;
             transition: opacity .18s ease;
         }
+
         .cover-card.coverflow-initial {
             transition: none !important;
         }
@@ -74,6 +96,7 @@
 
         /* Respect devices that explicitly request reduced motion. */
         @media (prefers-reduced-motion: reduce) {
+
             *,
             *::before,
             *::after {
@@ -104,7 +127,7 @@
         </div>
 
     </div>
-<header id="top">
+    <header id="top">
         <nav class="navbar">
 
             <a href="#" class="logo">
