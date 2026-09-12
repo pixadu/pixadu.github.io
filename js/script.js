@@ -1,94 +1,119 @@
 // ======================================================
-// 3D HERO COVERFLOW
+// LIGHTWEIGHT HERO SLIDER
 // ======================================================
-const featuredGames=[
-{title:"Minecraft",heading:"Build. Explore. Survive⛏️",description:"Build, explore and survive in an endless block world.",image:"images/minecraft.png",page:"minecraft.html"},
-{title:"GTA Vice City",heading:"Return To Vice City",description:"Experience the legendary open-world crime adventure.",image:"images/gta vice city.png",page:"gta.html"},
-{title:"Angry Birds",heading:"Destroy Pig Fortresses",description:"Launch birds and solve fun physics puzzles.",image:"images/angrybirdshero.png",page:"angrybirds.html"},
-{title:"Chess",heading:"Challenge Your Mind",description:"Play the world's most iconic strategy game.",image:"images/chess.jpg",page:"chess.html"},
-{title:"2048",heading:"Can You Reach 2048?",description:"Slide the tiles and beat your highest score.",image:"images/2048.jpg",page:"2048.html"},
-{title:"Subway Surfers",heading:"Escape the Inspector",description:"Run, dodge trains, collect coins and escape the inspector.",image:"images/subway-surfers.jpg",page:"subway.html"},
-{title:"Tekken 3",heading:"Enter The Fight",description:"Classic arcade fighting action, right in your browser.",image:"images/tekken3.jpg",page:"tekken3.html"}];
-const hero=document.querySelector(".hero-3d"),track=document.getElementById("coverflowTrack"),stage=document.getElementById("coverflowStage"),title=document.getElementById("heroTitle"),desc=document.getElementById("heroDescription"),play=document.getElementById("heroPlayBtn"),prev=document.getElementById("prevHero"),next=document.getElementById("nextHero"),dots=document.getElementById("heroDots");
-let currentGame=0,autoTimer,dragStart=0,dragging=false,lastWheel=0;
-featuredGames.forEach(g=>{const i=new Image();i.src=g.image;});
-featuredGames.forEach((g,i)=>{
- const c=document.createElement("article");c.className="cover-card";c.innerHTML=`<img src="${g.image}" alt="${g.title}" width="350" height="219" decoding="async"><div class="cover-shine"></div><div class="cover-label">${g.title}</div>`;c.addEventListener("click",()=>{if(i===currentGame)location.href=g.page;else{currentGame=i;render();resetAuto();}});track.appendChild(c);
- const d=document.createElement("button");d.className="hero-dot";d.addEventListener("click",()=>{currentGame=i;render();resetAuto();});dots.appendChild(d);
-});
-const cards=[...track.children],mod=(n,m)=>((n%m)+m)%m;
-let firstRender = true;
-function render(){
- const n=cards.length;
- cards.forEach((c,i)=>{let d=i-currentGame;if(d>n/2)d-=n;if(d<-n/2)d+=n;let ad=Math.abs(d);c.className="cover-card "+(!d?"is-center":"");c.style.setProperty("--x",d*125+"px");c.style.setProperty("--z",-ad*150+"px");c.style.setProperty("--r",d*34+"deg");c.style.setProperty("--s",!d?1:Math.max(.64,1-ad*.12));c.style.opacity=ad<=3?(!d?1:Math.max(.28,1-ad*.23)):0;c.style.pointerEvents=ad<=3?"auto":"none";c.style.zIndex=20-ad;});
- if (firstRender) {
-   cards.forEach(c => c.classList.add("coverflow-initial"));
-   // Force the browser to commit the initial geometry before enabling transitions.
-   track.offsetWidth;
-   cards.forEach(c => c.classList.remove("coverflow-initial"));
-   stage?.classList.add("coverflow-ready");
-   firstRender = false;
- }
- const g=featuredGames[currentGame];title.textContent=g.heading;desc.textContent=g.description;play.href=g.page;dots.querySelectorAll(".hero-dot").forEach((d,i)=>d.classList.toggle("active",i===currentGame));
+
+const featuredGames = [
+    {title:"Minecraft", heading:"Build Explore Survive", description:"Build, explore and survive in an endless block world.", image:"images/minecraft.png", page:"minecraft.html"},
+    {title:"GTA Vice City", heading:"Return To Vice City", description:"Experience the legendary open-world crime adventure.", image:"images/gta vice city.png", page:"gta.html"},
+    {title:"Angry Birds", heading:"Destroy Pig Fortresses", description:"Launch birds and solve fun physics puzzles.", image:"images/angrybirdshero.png", page:"angrybirds.html"},
+    {title:"Chess", heading:"Challenge Your Mind", description:"Play the world's most iconic strategy game.", image:"images/chess.jpg", page:"chess.html"},
+    {title:"2048", heading:"Can You Reach 2048?", description:"Slide the tiles and beat your highest score.", image:"images/2048.jpg", page:"2048.html"},
+    {title:"Subway Surfers", heading:"Escape the Inspector", description:"Run, dodge trains, collect coins and escape the inspector.", image:"images/subway-surfers.jpg", page:"subway.html"},
+    {title:"Tekken 3", heading:"Enter The Fight", description:"Classic arcade fighting action, right in your browser.", image:"images/tekken3.jpg", page:"tekken3.html"}
+];
+
+const hero = document.querySelector(".hero-3d");
+const heroImage = document.getElementById("heroSimpleImage");
+const heroLabel = document.getElementById("heroSimpleLabel");
+const title = document.getElementById("heroTitle");
+const desc = document.getElementById("heroDescription");
+const play = document.getElementById("heroPlayBtn");
+const prev = document.getElementById("prevHero");
+const next = document.getElementById("nextHero");
+const dots = document.getElementById("heroDots");
+
+let currentGame = 0;
+let autoTimer = null;
+let heroChanging = false;
+
+function mod(n, m) {
+    return ((n % m) + m) % m;
 }
-function nextSlide(){currentGame=mod(currentGame+1,cards.length);render()} function previousSlide(){currentGame=mod(currentGame-1,cards.length);render()}
-function resetAuto(){clearInterval(autoTimer);autoTimer=setInterval(nextSlide,6500)}
-prev?.addEventListener("click",()=>{previousSlide();resetAuto()});next?.addEventListener("click",()=>{nextSlide();resetAuto()});
-let wheelGestureActive = false;
-let wheelEndTimer = null;
-let wheelLastDirection = 0;
 
-stage?.addEventListener("wheel", e => {
+function renderHero(animate = false) {
+    const game = featuredGames[currentGame];
 
-    e.preventDefault();
-    e.stopPropagation();
+    if (animate && heroImage && !heroChanging) {
+        heroChanging = true;
+        heroImage.classList.add("hero-simple-changing");
 
-    const direction = e.deltaY > 0 ? 1 : -1;
-
-    clearTimeout(wheelEndTimer);
-
-    /*
-       Mouse wheel:
-       every individual wheel notch changes one card.
-
-       Trackpad:
-       many tiny events arrive together. They are treated
-       as one gesture, but the lock is released as soon as
-       the event burst actually ends.
-    */
-
-    if (!wheelGestureActive) {
-
-        wheelGestureActive = true;
-        wheelLastDirection = direction;
-
-        if (direction > 0) {
-            nextSlide();
-        } else {
-            previousSlide();
-        }
-
-        resetAuto();
+        setTimeout(() => {
+            heroImage.src = game.image;
+            heroImage.alt = game.title;
+            heroImage.onload = () => {
+                heroImage.classList.remove("hero-simple-changing");
+                heroChanging = false;
+            };
+            // Prevent a cached-image edge case from leaving the image faded.
+            setTimeout(() => {
+                heroImage.classList.remove("hero-simple-changing");
+                heroChanging = false;
+            }, 400);
+        }, 180);
+    } else if (heroImage) {
+        heroImage.src = game.image;
+        heroImage.alt = game.title;
     }
 
-    /*
-       Detect the END of the physical trackpad swipe.
-       Very short = ready for the next swipe.
-    */
-    wheelEndTimer = setTimeout(() => {
+    if (heroLabel) heroLabel.textContent = game.title;
+    if (title) title.textContent = game.heading;
+    if (desc) desc.textContent = game.description;
+    if (play) play.href = game.page;
 
-        wheelGestureActive = false;
-        wheelLastDirection = 0;
+    if (dots) {
+        dots.querySelectorAll(".hero-dot").forEach((dot, i) => {
+            dot.classList.toggle("active", i === currentGame);
+        });
+    }
+}
 
-    }, 80);
+if (dots) {
+    featuredGames.forEach((game, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "hero-dot";
+        dot.setAttribute("aria-label", `Show ${game.title}`);
+        dot.addEventListener("click", () => {
+            currentGame = i;
+            renderHero(true);
+            resetAuto();
+        });
+        dots.appendChild(dot);
+    });
+}
 
-}, { passive: false });
+function nextSlide() {
+    currentGame = mod(currentGame + 1, featuredGames.length);
+    renderHero(true);
+}
 
-stage?.addEventListener("pointerdown",e=>{dragging=true;dragStart=e.clientX;stage.setPointerCapture?.(e.pointerId);clearInterval(autoTimer)});
-stage?.addEventListener("pointerup",e=>{if(!dragging)return;let dx=e.clientX-dragStart;dragging=false;if(Math.abs(dx)>45)dx<0?nextSlide():previousSlide();resetAuto()});
-stage?.addEventListener("pointercancel",()=>{dragging=false;resetAuto()});
-hero?.addEventListener("mouseenter",()=>clearInterval(autoTimer));hero?.addEventListener("mouseleave",resetAuto);
-render();resetAuto();
+function previousSlide() {
+    currentGame = mod(currentGame - 1, featuredGames.length);
+    renderHero(true);
+}
+
+function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => {
+        nextSlide();
+    }, 6500);
+}
+
+prev?.addEventListener("click", () => {
+    previousSlide();
+    resetAuto();
+});
+
+next?.addEventListener("click", () => {
+    nextSlide();
+    resetAuto();
+});
+
+hero?.addEventListener("mouseenter", () => clearInterval(autoTimer));
+hero?.addEventListener("mouseleave", resetAuto);
+
+renderHero(false);
+resetAuto();
 
 // ======================================================
 // CURSOR GLOW
@@ -145,24 +170,20 @@ function revealSections() {
 
 
 // ======================================================
-// LOADER
+// LIGHTWEIGHT LOADER
+// Never wait for game assets or JavaScript features.
 // ======================================================
 
 const loader = document.getElementById("loader");
 const loadingText = document.getElementById("loading-text");
 const progress = document.querySelector("#loader .progress");
 
-const loadingMessages = [
-    "Loading Assets...",
-    "Initializing Engine...",
-    "Preparing Minecraft...",
-    "Almost Ready..."
-];
-
 let loaderDone = false;
 
 function setLoaderProgress(value) {
-    if (progress) progress.style.width = value + "%";
+    if (progress) {
+        progress.style.width = Math.min(100, Math.max(0, value)) + "%";
+    }
 }
 
 function hideLoader() {
@@ -173,6 +194,10 @@ function hideLoader() {
 
     if (loader) {
         loader.classList.add("loader-hide");
+        // Remove it after the fade so it cannot block clicks/rendering.
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 450);
     }
 
     try {
@@ -181,65 +206,35 @@ function hideLoader() {
 }
 
 function finishLoader() {
-    if (loadingText) {
-        loadingText.textContent = "Almost Ready...";
-    }
-
+    if (loadingText) loadingText.textContent = "Ready!";
     setLoaderProgress(100);
-
-    setTimeout(hideLoader, 250);
+    setTimeout(hideLoader, 120);
 }
 
-/* Always reveal the page independently of the loader. */
-setTimeout(() => {
-    try {
-        revealSections();
-    } catch (e) {}
-}, 0);
-
-let alreadyLoaded = false;
-
+// Make the page visible immediately; the loader is only cosmetic.
 try {
-    alreadyLoaded = sessionStorage.getItem("pixelplay_loader") === "true";
+    revealSections();
 } catch (e) {}
 
-if (alreadyLoaded) {
+setLoaderProgress(20);
 
-    hideLoader();
+if (loadingText) loadingText.textContent = "Loading Pixadu...";
 
-} else {
+setTimeout(() => {
+    if (loaderDone) return;
+    setLoaderProgress(55);
+    if (loadingText) loadingText.textContent = "Preparing Games...";
+}, 250);
 
-    setLoaderProgress(8);
+setTimeout(() => {
+    if (loaderDone) return;
+    setLoaderProgress(85);
+    if (loadingText) loadingText.textContent = "Almost Ready...";
+}, 500);
 
-    const steps = [
-        [550, 35, "Initializing Engine..."],
-        [1100, 68, "Preparing Minecraft..."],
-        [1650, 90, "Almost Ready..."]
-    ];
+// Normal path.
+window.addEventListener("load", finishLoader, { once: true });
 
-    steps.forEach(([delay, value, message]) => {
-        setTimeout(() => {
-            if (loaderDone) return;
-            if (loadingText) loadingText.textContent = message;
-            setLoaderProgress(value);
-        }, delay);
-    });
+// Hard safety timeout: loader disappears even if another resource hangs.
+setTimeout(finishLoader, 1800);
 
-    /* Normal fast path. */
-    window.addEventListener("load", () => {
-        try {
-            revealSections();
-        } catch (e) {}
-
-        setTimeout(finishLoader, 250);
-    }, { once: true });
-
-    /*
-       Absolute safety fallback.
-       This does NOT call revealSections(), so an error anywhere
-       else on the page cannot stop the loader from disappearing.
-    */
-    setTimeout(() => {
-        finishLoader();
-    }, 3500);
-}

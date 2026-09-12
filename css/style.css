@@ -1,4103 +1,2009 @@
-/* =====================================================
-   PIXELPLAY STYLESHEET
-===================================================== */
+/* =========================================================
+   PIXADU — CLEAN HOMEPAGE STYLES
+   Fresh stylesheet for the lightweight/simple hero.
+   ========================================================= */
 
-
-/* =====================================================
-   01. VARIABLES
-===================================================== */
-
-:root {
-
-    --primary: #22c55e;
-    --bg: #08131f;
-    --bg2: #0f172a;
-    --bg3: #111827;
-
-    --card: #1e293b;
-
-    --text: #ffffff;
-    --text-light: #cbd5e1;
-    --text-muted: #94a3b8;
-
-    --radius: 20px;
-
-    --transition: .3s;
-
+:root{
+    --bg:#06141f;
+    --bg-2:#071d27;
+    --panel:rgba(16,36,50,.72);
+    --panel-solid:#102b39;
+    --border:rgba(148,190,205,.18);
+    --text:#f5f8fa;
+    --muted:#aebfca;
+    --green:#22c55e;
+    --green-2:#16a34a;
+    --cyan:#00d2ff;
+    --radius:22px;
+    --container:min(1180px,92vw);
 }
 
-
-/* =====================================================
-   02. RESET
-===================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
 }
 
-html,
-body {
-    width: 100%;
-    overflow-x: hidden;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    background: #08131f;
-    color: #fff;
-}
-
-a {
-    text-decoration: none;
-    color: white;
-}
-
-
-
-/* =====================================================
-   04. LOADER — COOL PIXADU VERSION
-===================================================== */
-
-#loader {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    z-index: 99999;
+body{
+    margin:0;
+    min-width:320px;
+    color:var(--text);
     background:
-        radial-gradient(circle at 50% 45%, rgba(34,197,94,.13), transparent 28%),
-        radial-gradient(circle at 15% 80%, rgba(0,210,255,.09), transparent 30%),
-        radial-gradient(circle at 88% 20%, rgba(139,92,246,.09), transparent 30%),
-        #070b12;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity .6s ease, visibility .6s ease;
+        radial-gradient(circle at 85% 10%,rgba(0,210,255,.07),transparent 28%),
+        radial-gradient(circle at 18% 22%,rgba(34,197,94,.06),transparent 30%),
+        linear-gradient(135deg,#06141f 0%,#061a24 48%,#061d19 100%);
+    font-family:"Poppins",sans-serif;
+    overflow-x:hidden;
 }
 
-#loader::before,
-#loader::after {
-    content: "";
-    position: absolute;
-    width: 430px;
-    height: 430px;
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(85px);
-    opacity: .13;
+img{
+    max-width:100%;
 }
 
-#loader::before {
-    background: #22c55e;
-    transform: translate(-35%, 15%);
-    animation: loaderAmbientOne 7s ease-in-out infinite alternate;
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
-#loader::after {
-    background: #00d2ff;
-    transform: translate(35%, -20%);
-    animation: loaderAmbientTwo 8s ease-in-out infinite alternate;
+button,
+input{
+    font:inherit;
 }
 
-.loader-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-}
-
-.loader-content h1 {
-    position: relative;
-    margin-bottom: 18px;
-    color: #fff;
-    font-size: clamp(42px, 7vw, 62px);
-    font-weight: 800;
-    letter-spacing: -2px;
-    text-shadow: 0 0 12px rgba(34,197,94,.28), 0 0 35px rgba(34,197,94,.10);
-    animation: loaderFloat 2.4s ease-in-out infinite;
-}
-
-.loader-content h1::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -10px;
-    width: 62px;
-    height: 3px;
-    transform: translateX(-50%);
-    border-radius: 99px;
-    background: linear-gradient(90deg, #22c55e, #00d2ff);
-    box-shadow: 0 0 10px rgba(34,197,94,.55), 0 0 24px rgba(0,210,255,.20);
-    animation: loaderLine 2s ease-in-out infinite;
-}
-
-.loader-content p {
-    color: rgba(226,232,240,.72);
-    font-size: 13px;
-    letter-spacing: .8px;
-    margin-bottom: 18px;
-}
-
-.progress-bar {
-    position: relative;
-    width: min(320px, 75vw);
-    height: 7px;
-    margin: 0 auto;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,.10);
-    border-radius: 999px;
-    background: rgba(255,255,255,.055);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,.45), 0 0 20px rgba(34,197,94,.06);
-}
-
-.progress {
-    position: relative;
-    height: 100%;
-    width: 0%;
-    overflow: hidden;
-    border-radius: inherit;
-    background: linear-gradient(90deg, #16a34a, #22c55e, #86efac);
-    box-shadow: 0 0 12px rgba(34,197,94,.55);
-    transition: width .45s cubic-bezier(.22,1,.36,1);
-}
-
-.progress::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -45%;
-    width: 45%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
-    animation: loaderShine 1.1s linear infinite;
-}
-
-.loader-content p::after {
-    content: "•••";
-    display: inline-block;
-    margin-left: 7px;
-    color: #22c55e;
-    letter-spacing: 3px;
-    animation: loaderDots 1.2s ease-in-out infinite;
-}
-
-.loader-hide {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-}
-
-@keyframes loaderFloat {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-@keyframes loaderLine {
-    0%,100% { width: 48px; opacity: .65; }
-    50% { width: 82px; opacity: 1; }
-}
-
-@keyframes loaderShine {
-    0% { left: -45%; }
-    100% { left: 115%; }
-}
-
-@keyframes loaderDots {
-    0%,100% { opacity: .3; }
-    50% { opacity: 1; }
-}
-
-@keyframes loaderAmbientOne {
-    from { transform: translate(-45%,18%) scale(.85); }
-    to { transform: translate(15%,-8%) scale(1.15); }
-}
-
-@keyframes loaderAmbientTwo {
-    from { transform: translate(35%,-18%) scale(.8); }
-    to { transform: translate(-15%,15%) scale(1.12); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #loader::before, #loader::after, .loader-content h1,
-    .loader-content h1::after, .progress::after,
-    .loader-content p::after { animation: none; }
-}
-
-@media (max-width: 480px) {
-    .loader-content h1 { font-size: 42px; }
-    .progress-bar { width: 270px; }
-}
-
-/* =====================================================
-   06. HERO
-===================================================== */
-
-.hero {
-    width: 90%;
-    min-height: 85vh;
-    padding: 140px 0 60px;
-    margin: auto;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 60px;
-
-}
-
-.hero-content {
-
-    flex: 1;
-
-}
-
-.hero-tag {
-
-    display: inline-block;
-
-    padding: 10px 18px;
-
-    margin-bottom: 20px;
-
-    border-radius: 50px;
-
-    background: rgba(34, 197, 94, .12);
-
-    color: var(--primary);
-
-}
-
-.hero h1 {
-
-    font-size: 50px;
-
-    line-height: 1.2;
-
-    margin-bottom: 25px;
-
-}
-
-.hero p {
-
-    max-width: 600px;
-
-    margin-bottom: 40px;
-
-    font-size: 18px;
-
-    color: var(--text-light);
-
-}
-
-.hero-buttons {
-
-    display: flex;
-
-    gap: 20px;
-
-}
-
-
-/* =====================================================
-   HERO BUTTONS
-===================================================== */
-
-.play-btn,
-.explore-btn {
-
-    padding: 15px 35px;
-
-    border-radius: 50px;
-
-    font-weight: 600;
-
-    transition: var(--transition);
-
-}
-
-.play-btn {
-
-    background: var(--primary);
-
-}
-
-.play-btn:hover {
-
-    transform: translateY(-5px) scale(1.05);
-
-    box-shadow:
-        0 0 25px var(--primary),
-        0 0 50px rgba(34, 197, 94, .35);
-
-}
-
-.explore-btn {
-
-    border: 2px solid var(--primary);
-
-}
-
-.explore-btn:hover {
-
-    background: var(--primary);
-
-}
-
-
-/* =====================================================
-   HERO IMAGE
-===================================================== */
-
-.hero-image {
-
-    width: 650px;
-    height: 400px;
-    flex: 1;
-    position: relative;
-    display: flex;
-    justify-content: center;
-
-}
-
-.hero-image img {
-
-    width: 100%;
-    max-width: 550px;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-
-    animation: float 4s ease-in-out infinite;
-
-    transition: opacity .4s ease;
-
-}
-
-.hero-content {
-
-    transition: opacity .4s ease;
-
-}
-
-.fade-out {
-
-    opacity: 0;
-
-}
-
-.fade-in {
-
-    opacity: 1;
-
-}
-
-
-/* =====================================================
-   HERO ARROWS
-===================================================== */
-
-.hero-arrow {
-
-    position: absolute;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 48px;
-    height: 48px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    cursor: pointer;
-
-    background: rgba(0, 0, 0, .45);
-
-    color: white;
-
-    font-size: 18px;
-
-    transition: var(--transition);
-
-    z-index: 5;
-
-}
-
-.hero-arrow:hover {
-
-    background: #ff6b00;
-
-}
-
-.left {
-
-    left: 15px;
-
-}
-
-.right {
-
-    right: 15px;
-
-}
-
-
-/* =====================================================
-   HERO DOTS
-===================================================== */
-
-.hero-dots {
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -35px;
-
-    transform: translateX(-50%);
-
-    display: flex;
-
-    gap: 12px;
-
-}
-
-.hero-dot {
-
-    width: 14px;
-    height: 14px;
-
-    border-radius: 50%;
-
-    background: #666;
-
-    cursor: pointer;
-
-    transition: var(--transition);
-
-}
-
-.hero-dot.active {
-
-    background: var(--primary);
-
-    transform: scale(1.2);
-
-}
-
-/* =====================================================
-   CONTINUE PLAYING
-===================================================== */
-
-.recently-played {
-    width: 90%;
-    max-width: 1400px;
-    margin: 45px auto 20px;
-    text-align: left;
-}
-
-.recently-played h2 {
-    margin: 0 0 25px;
-    font-size: 34px;
-    line-height: 1.2;
-    font-weight: 700;
-}
-
-/* Recent game card */
-
-.recently-played .game-card {
-    width: 100%;
-    max-width: 900px;
-
-    display: flex;
-    align-items: stretch;
-
-    overflow: hidden;
-
-    background: #1e293b;
-
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 22px;
-
-    box-shadow: 0 15px 35px rgba(0, 0, 0, .25);
-
-    transition: .35s ease;
-}
-
-.recently-played .game-card:hover {
-    transform: translateY(-5px);
-
-    border-color: rgba(34, 197, 94, .35);
-
-    box-shadow:
-        0 20px 45px rgba(0, 0, 0, .35),
-        0 0 25px rgba(34, 197, 94, .08);
-}
-
-/* Game image */
-
-.recently-played .game-card img {
-    width: 380px;
-    height: 220px;
-
-    flex-shrink: 0;
-
-    display: block;
-
-    object-fit: cover;
-
-    background: #111827;
-}
-
-/* Game information */
-
-.recently-played .game-info {
-    flex: 1;
-
-    padding: 30px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.recently-played .game-info h3 {
-    margin: 0 0 10px;
-
-    font-size: 28px;
-    line-height: 1.2;
-}
-
-.recently-played .game-info p {
-    margin: 0 0 22px;
-
-    color: var(--text-muted);
-
-    font-size: 15px;
-}
-
-/* Continue button */
-
-.recently-played .play-game {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: fit-content;
-
-    padding: 12px 26px;
-
-    border-radius: 50px;
-
-    background: var(--primary);
-
-    color: white;
-
-    font-weight: 600;
-
-    transition: .3s ease;
-}
-
-.recently-played .play-game:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 0 20px rgba(34, 197, 94, .45);
-}
-
-
-/* =====================================================
-   CONTINUE PLAYING — TABLET
-===================================================== */
-
-@media (max-width: 768px) {
-
-    .recently-played {
-        width: 90%;
-        margin: 35px auto 20px;
-    }
-
-    .recently-played h2 {
-        font-size: 30px;
-        margin-bottom: 20px;
-    }
-
-    .recently-played .game-card {
-        max-width: 650px;
-    }
-
-    .recently-played .game-card img {
-        width: 280px;
-        height: 190px;
-    }
-
-    .recently-played .game-info {
-        padding: 22px;
-    }
-
-    .recently-played .game-info h3 {
-        font-size: 23px;
-    }
-}
-
-
-/* =====================================================
-   CONTINUE PLAYING — MOBILE
-===================================================== */
-
-@media (max-width: 427px) {
-
-    .recently-played {
-        width: calc(100% - 40px);
-        margin: 30px auto 15px;
-    }
-
-    .recently-played h2 {
-        font-size: 26px;
-        margin-bottom: 18px;
-    }
-
-    .recently-played .game-card {
-        width: 100%;
-
-        flex-direction: column;
-
-        border-radius: 18px;
-    }
-
-    .recently-played .game-card img {
-        width: 100%;
-        max-width: none;
-        height: 200px;
-
-        object-fit: cover;
-    }
-
-    .recently-played .game-info {
-        width: 100%;
-        padding: 20px;
-    }
-
-    .recently-played .game-info h3 {
-        font-size: 22px;
-    }
-
-    .recently-played .game-info p {
-        font-size: 13px;
-    }
-
-    .recently-played .play-game {
-        width: 100%;
-    }
-}
-
-/* =====================================================
-   07. FEATURED GAMES
-===================================================== */
-
-.featured {
-    width: 100%;
-    margin: 0;
-    padding: 70px 0 35px;
-    overflow: hidden;
-    text-align: center;
-}
-
-/* CURATED FOR YOU */
-.featured .section-kicker {
-    width: 100%;
-    margin: 0 auto 12px;
-    padding: 0;
-
-    text-align: center;
-
-    color: var(--primary);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-/* FEATURED HEADING */
-.featured .featured-heading-row {
-    width: 100%;
-    margin: 0 auto 38px;
-    padding: 0 20px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-}
-
-/* Inner heading */
-.featured .featured-heading-row>div {
-    width: 100%;
-    max-width: 900px;
-
-    margin: 0 auto;
-    padding: 0;
-
-    text-align: center;
-}
-
-/* Featured Games */
-.featured .featured-heading-row h2 {
-    width: 100%;
-
-    margin: 0 0 10px;
-    padding: 0;
-
-    text-align: center;
-
-    font-size: clamp(36px, 4vw, 52px);
-    line-height: 1.1;
-    font-weight: 700;
-}
-
-/* Subtitle */
-.featured .featured-heading-row p {
-    width: 100%;
-    max-width: 700px;
-
-    margin: 0 auto;
-    padding: 0;
-
-    text-align: center;
-
-    color: var(--text-muted);
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-
-/* =========================
-   FEATURED CARDS
-========================= */
-
-.featured-slider {
-    width: 100%;
-    overflow: hidden;
-    padding: 8px 0 25px;
-}
-
-.featured-track {
-    display: flex;
-    gap: 25px;
-    width: max-content;
-
-    animation: scroll 25s linear infinite;
-}
-
-.featured-track:hover {
-    animation-play-state: paused;
-}
-
-.featured-item {
-    width: 280px;
-    min-width: 280px;
-
-    background: #1e293b;
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 20px;
-
-    overflow: hidden;
-    flex-shrink: 0;
-
-    transition: .35s;
-}
-
-.featured-item:hover {
-    transform: translateY(-8px);
-    border-color: rgba(34, 197, 94, .35);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, .35);
-}
-
-.featured-item img {
-    width: 100%;
-    height: 180px;
-
-    display: block;
-    object-fit: cover;
-}
-
-.featured-item h3 {
-    margin: 0;
-    padding: 18px;
-
-    font-size: 24px;
-}
-
-.featured-item a {
-    display: block;
-
-    margin: 0 18px 18px;
-    padding: 12px;
-
-    background: rgba(34, 197, 94, .10);
-    border: 1px solid rgba(34, 197, 94, .30);
-
-    text-align: center;
-
-    border-radius: 40px;
-
-    color: white;
-    font-weight: 600;
-
-    transition: .3s;
-}
-
-.featured-item a:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-}
-
-
-/* =========================
-   FEATURED ANIMATION
-========================= */
-
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 768px) {
-
-    .featured {
-        padding: 60px 0 25px;
-    }
-
-    .featured .section-kicker {
-        font-size: 11px;
-        letter-spacing: 2.5px;
-    }
-
-    .featured .featured-heading-row {
-        padding: 0 20px;
-        margin-bottom: 30px;
-    }
-
-    .featured .featured-heading-row h2 {
-        font-size: 38px;
-    }
-
-    .featured .featured-heading-row p {
-        font-size: 14px;
-    }
-
-    .featured-item {
-        width: 250px;
-        min-width: 250px;
-    }
-
-    .featured-item img {
-        height: 165px;
-    }
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 427px) {
-
-    .featured {
-        padding: 50px 0 20px;
-    }
-
-    .featured .section-kicker {
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-
-    .featured .featured-heading-row {
-        padding: 0 18px;
-        margin-bottom: 25px;
-    }
-
-    .featured .featured-heading-row h2 {
-        font-size: 31px;
-    }
-
-    .featured .featured-heading-row p {
-        max-width: 330px;
-        margin-left: auto;
-        margin-right: auto;
-
-        font-size: 13px;
-    }
-
-    .featured-item {
-        width: 235px;
-        min-width: 235px;
-    }
-
-    .featured-item img {
-        height: 150px;
-    }
-}
-
-/* =====================================================
-   08. FEATURES
-===================================================== */
-
-.features {
-
-    width: 90%;
-
-    margin: 120px auto;
-
-    text-align: center;
-
-}
-
-.features h2 {
-
-    font-size: 42px;
-
-    margin-bottom: 60px;
-
-}
-
-.feature-container {
-
-    display: flex;
-
-    gap: 30px;
-
-}
-
-.feature-card {
-
-    flex: 1;
-
-    padding: 45px 30px;
-
-    border-radius: 20px;
-
-    background: var(--card);
-
-    cursor: pointer;
-
-    transition: .4s;
-
-}
-
-.feature-card:hover {
-
-    transform: translateY(-12px) scale(1.02);
-
-    box-shadow: 0 20px 40px rgba(0, 0, 0, .35);
-
-}
-
-.feature-card i {
-
-    font-size: 55px;
-
-    color: var(--primary);
-
-    margin-bottom: 25px;
-
-}
-
-.feature-card h3 {
-
-    font-size: 28px;
-
-    margin-bottom: 15px;
-
-}
-
-.feature-card p {
-
-    color: var(--text-light);
-
-    line-height: 1.7;
-
-}
-
-.featured {
-
-    padding: 80px 0;
-
-    overflow: hidden;
-
-}
-
-.featured h2 {
-
-    margin-bottom: 35px;
-
-    font-size: 42px;
-
-    text-align: center;
-
-}
-
-.featured-slider {
-
-    overflow: hidden;
-
-}
-
-.featured-track {
-
-    display: flex;
-
-    gap: 25px;
-
-    width: max-content;
-
-    animation: scroll 25s linear infinite;
-
-}
-
-.featured-track:hover {
-
-    animation-play-state: paused;
-
-}
-
-.featured-item {
-
-    width: 280px;
-
-    background: #1e293b;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    flex-shrink: 0;
-
-    transition: .35s;
-
-}
-
-.featured-item:hover {
-
-    transform: translateY(-8px);
-
-}
-
-.featured-item img {
-
-    width: 100%;
-
-    height: 180px;
-
-    object-fit: cover;
-
-}
-
-.featured-item h3 {
-
-    padding: 18px;
-
-    font-size: 24px;
-
-}
-
-.featured-item a {
-
-    display: block;
-
-    margin: 0 18px 18px;
-
-    padding: 12px;
-
-    background: #22c55e;
-
-    text-align: center;
-
-    border-radius: 40px;
-
-    text-decoration: none;
-
-    color: white;
-
-    font-weight: 600;
-
-}
-
-@keyframes scroll {
-
-    0% {
-
-        transform: translateX(0);
-
-    }
-
-    100% {
-
-        transform: translateX(-50%);
-
-    }
-
-}
-
-/* ==========================================
-   CHOOSE YOUR ADVENTURE
-========================================== */
-
-.choose-section {
-    width: 90%;
-    margin: 100px auto;
-    text-align: center;
-}
-
-.choose-section h2 {
-    font-size: 42px;
-    margin-bottom: 60px;
-}
-
-.choose-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-}
-
-.choose-card {
-
-    background: #1e293b;
-
-    border-radius: 24px;
-
-    overflow: hidden;
-
-    transition: .35s;
-
-}
-
-.choose-card:hover {
-
-    transform: translateY(-12px);
-
-    box-shadow: 0 25px 50px rgba(0, 0, 0, .4);
-
-}
-
-.choose-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    background: none;
-}
-
-.choose-card h3 {
-
-    margin: 25px 0 15px;
-
-    font-size: 34px;
-
-}
-
-.choose-card p {
-
-    color: #cbd5e1;
-
-    width: 85%;
-
-    margin: auto;
-
-    line-height: 1.8;
-
-}
-
-.choose-btn {
-
-    display: inline-block;
-
-    margin: 35px 0;
-
-    padding: 14px 34px;
-
-    background: #22c55e;
-
-    border-radius: 50px;
-
-    font-weight: 600;
-
-    transition: .3s;
-
-}
-
-.choose-btn:hover {
-
-    transform: scale(1.05);
-
-    box-shadow: 0 0 25px #22c55e;
-
-}
-
-@media(max-width:768px) {
-
-    .choose-container {
-
-        grid-template-columns: 1fr;
-
-    }
-
-}
-
-/* =====================================================
-   09. TRENDING
-===================================================== */
-
-.trending {
-
-    padding: 80px 0;
-
-}
-
-/* ==========================================
-   TRENDING TITLE
-========================================== */
-
-.trending {
-
-    padding: 100px 0;
-
-}
-
-.trending-title {
-
-    width: 90%;
-
-    margin: 0 auto;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 25px;
-
-}
-
-.title-line {
-
-    flex: 1;
-
-    height: 2px;
-
-    background: linear-gradient(to right,
-            transparent,
-            #22c55e,
-            transparent);
-
-    max-width: 260px;
-
-}
-
-.trending-title h2 {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    font-size: 52px;
-
-    font-weight: 700;
-
-    margin: 0;
-
-}
-
-.trending-title h2 span {
-
-    color: #22c55e;
-
-    font-size: 48px;
-
-}
-
-.trending-subtitle {
-
-    text-align: center;
-
-    color: #94a3b8;
-
-    margin: 18px 0 55px;
-
-    font-size: 22px;
-
-}
-
-.trending-container {
-
-    width: 92%;
-
-    max-width: 1400px;
-
-    margin: auto;
-
-    padding: 40px;
+/* -------------------------
+   LOADER
+   ------------------------- */
 
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 35px;
-
-    border-radius: 24px;
-
-    background: rgba(255, 255, 255, .04);
-
-    border: 1px solid rgba(255, 255, 255, .08);
-
-}
-
-.trending h2 {
-
-    font-size: 42px;
-
-    margin-bottom: 45px;
-
-}
-
-.trend-card {
-
-    overflow: hidden;
-
-    border-radius: 20px;
-
-    background: var(--card);
-
-    transition: .4s;
-
-}
-
-.live-badge {
-
-    display: inline-block;
-
-    padding: 7px 15px;
-
-    margin-bottom: 15px;
-
-    border-radius: 30px;
-
-    background: rgba(34, 197, 94, .15);
-
-    color: #22c55e;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-}
-
-.trend-card:hover {
-
-    transform: translateY(-12px) scale(1.02);
-
-    box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
-
-}
-
-.trend-card img {
-
-    width: 100%;
-
-    height: 220px;
-
-    object-fit: cover;
-
-}
-
-.trend-info {
-
-    padding: 25px;
-
-}
-
-.trend-info p {
-
-    color: var(--text-muted);
-
-    margin: 15px 0;
-
-}
-
-.rating {
-
-    color: var(--primary);
-
-    margin-bottom: 20px;
-
-}
-
-.play-small {
-
-    display: inline-block;
-
-    padding: 12px 25px;
-
-    border-radius: 30px;
-
-    background: var(--primary);
-
-    transition: var(--transition);
-
-}
-
-.play-small:hover {
-
-    box-shadow: 0 0 20px var(--primary);
-
-}
-
-/* =====================================================
-   10. EFFECTS
-===================================================== */
-
-/* Cursor Glow */
-
-.cursor-glow {
-
-    position: fixed;
-
-    left: 0;
-    top: 0;
-
-    width: 220px;
-    height: 220px;
-
-    border-radius: 50%;
-
-    pointer-events: none;
-
-    background: radial-gradient(circle,
-            rgba(34, 197, 94, .18),
-            transparent 70%);
-
-    transform: translate(-50%, -50%);
-
-    transition:
-        left .08s linear,
-        top .08s linear;
-
-    z-index: -1;
-
-}
-
-
-/* Scroll Reveal */
-
-.reveal {
-
-    opacity: 0;
-
-    transform: translateY(80px);
-
-    transition: 1s ease;
-
-}
-
-.reveal.active {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-}
-
-
-/* Section Header */
-
-.section-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-}
-
-.section-header a {
-
-    color: var(--primary);
-
-    font-weight: 600;
-
-    transition: var(--transition);
-
-}
-
-.section-header a:hover {
-
-    color: #4ade80;
-
-}
-
-
-
-/* =====================================================
-   11. ANIMATIONS
-===================================================== */
-
-/* Background Animation */
-
-@keyframes bgAnimation {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-
-}
-
-
-/* Hero Floating */
-
-@keyframes float {
-
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-
-}
-
-
-/* Loader Progress */
-
-@keyframes loading {
-
-    from {
-        width: 0%;
-    }
-
-    to {
-        width: 100%;
-    }
-
-}
-
-.mobile-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.mobile-menu-header h2 {
-    font-size: 26px;
-}
-
-.mobile-menu-header i {
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.mobile-search {
-    display: none;
-    align-items: center;
-    gap: 10px;
-
-    background: var(--card);
-
-    padding: 12px 16px;
-
-    border-radius: 50px;
-
-    margin-bottom: 30px;
-}
-
-.mobile-search input {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    color: white;
-}
-
-.mobile-links {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.mobile-links a {
-    padding: 15px;
-    border-radius: 12px;
-    transition: .3s;
-}
-
-.mobile-links a:hover {
-    background: var(--card);
-    color: var(--primary);
-}
-
-.menu-overlay {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0, 0, 0, .6);
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: .3s;
-
-    z-index: 1999;
-}
-
-.menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* =====================================================
-   COMING SOON CARD
-===================================================== */
-
-.coming-badge {
-
-    display: inline-block;
-
-    padding: 6px 14px;
-
-    margin-bottom: 15px;
-
-    border-radius: 30px;
-
-    background: rgba(255, 165, 0, .15);
-
-    color: #facc15;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-}
-
-.release-date {
-
-    margin: 18px 0;
-
-    color: var(--text-light);
-
-    font-weight: 500;
-
-}
-
-.notify-btn {
-
-    display: inline-block;
-
-    padding: 12px 24px;
-
-    border-radius: 30px;
-
-    background: #334155;
-
-    color: white;
-
-    transition: var(--transition);
-
-    cursor: pointer;
-
+#loader{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:grid;
+    place-items:center;
+    background:#06141f;
+    transition:opacity .35s ease,visibility .35s ease;
 }
 
-.notify-btn:hover {
-
-    background: var(--primary);
-
-    transform: translateY(-4px);
-
-    box-shadow: 0 0 20px var(--primary);
-
-}
-
-
-/* =====================================================
-   14. RESPONSIVE
-===================================================== */
-
-/* ==========================
-   LAPTOP / TABLET (1024px)
-========================== */
-/* ==========================
-   1024px
-========================== */
-
-@media (max-width:1024px) {
-
-    .hero {
-        gap: 40px;
-    }
-
-    .trending-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-
-@media (max-width:768px) {
-
-    .hero {
-        flex-direction: column;
-        text-align: center;
-        gap: 45px;
-        padding-top: 130px;
-    }
-
-    .hero-content {
-        width: 100%;
-    }
-
-    .hero h1 {
-        font-size: 52px;
-        line-height: 1.15;
-    }
-
-    .hero p {
-        max-width: 600px;
-        margin: 25px auto 40px;
-    }
-
-    .hero-buttons {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .hero-image {
-        width: 100%;
-    }
-
-    .hero-image img {
-        width: 100%;
-        max-width: 420px;
-    }
-
-    .trending-title {
-
-        flex-direction: column;
-
-        gap: 15px;
-
-    }
-
-    .title-line {
-
-        display: none;
-
-    }
-
-    .trending-title h2 {
-
-        font-size: 38px;
-
-        text-align: center;
-
-    }
-
-    .trending-subtitle {
-
-        font-size: 17px;
-
-        padding: 0 20px;
-
-    }
-
-}
-
-
-
-@media (max-width:427px) {
-
-    .hero {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 30px;
-        padding: 110px 20px 60px;
-    }
-
-    .hero-content {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .hero h1 {
-        font-size: 2.3rem;
-        line-height: 1.15;
-    }
-
-    .hero p {
-        font-size: 1rem;
-        margin: 20px auto;
-        max-width: 320px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .play-btn,
-    .explore-btn {
-        width: 100%;
-        max-width: 260px;
-    }
-
-    .hero-image {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .hero-image img {
-        width: 100%;
-        max-width: 300px;
-        height: auto;
-    }
-
-    .recently-played .game-card {
-        flex-direction: column;
-        align-items: center;
-        /* text-align: center; */
-    }
-
-    .recently-played .game-card img {
-        width: 100%;
-        max-width: 360px;
-        height: 200px;
-        object-fit: cover;
-        display: block;
-    }
-
-    .recently-played .game-info {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .featured .game-card {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .featured .game-card img {
-        width: 100%;
-        max-width: 260px;
-    }
-
-    .featured .game-info {
-        width: 100%;
-    }
-
-    .trending-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .trend-card {
-        width: 100%;
-    }
-
-    .feature-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .feature-card {
-        width: 100%;
-    }
-}
-
-/* =====================================================
-   PIXADU HOMEPAGE V2 — VISUAL UPGRADE
-   Added as a safe override layer.
-===================================================== */
-
-body {
-    background:
-        radial-gradient(circle at 78% 12%, rgba(34, 197, 94, .10), transparent 28%),
-        radial-gradient(circle at 12% 42%, rgba(59, 130, 246, .06), transparent 24%),
-        #08131f;
+#loader.loader-hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
 }
 
-.hero {
-    position: relative;
-    width: min(1240px, 92%);
-    min-height: 720px;
-    padding: 135px 0 90px;
-    gap: clamp(35px, 5vw, 85px);
-    isolation: isolate;
+.loader-content{
+    width:min(360px,86vw);
+    text-align:center;
 }
 
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 8% -8% auto;
-    height: 430px;
-    background: radial-gradient(circle, rgba(34, 197, 94, .11), transparent 68%);
-    filter: blur(12px);
-    z-index: -2;
-    pointer-events: none;
+.loader-content h1{
+    margin:0 0 12px;
+    font-size:clamp(38px,7vw,58px);
+    font-weight:800;
 }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    left: 5%;
-    right: 5%;
-    bottom: 12px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, .45), transparent);
-    opacity: .65;
+.loader-content p{
+    margin:0 0 18px;
+    color:var(--muted);
+    font-size:14px;
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2;
-    flex: 0 1 540px;
+.progress-bar{
+    width:100%;
+    height:6px;
+    overflow:hidden;
+    border-radius:99px;
+    background:rgba(255,255,255,.09);
 }
 
-.hero-tag {
-    border: 1px solid rgba(34, 197, 94, .28);
-    box-shadow: 0 0 25px rgba(34, 197, 94, .08);
-    letter-spacing: .2px;
+.progress{
+    width:0;
+    height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,var(--green),var(--cyan));
+    transition:width .25s ease;
 }
 
-.hero h1 {
-    font-size: clamp(44px, 5vw, 72px);
-    letter-spacing: -2.5px;
-    text-shadow: 0 8px 40px rgba(0, 0, 0, .35);
-}
-
-.hero p {
-    font-size: 17px;
-    max-width: 560px;
-    line-height: 1.8;
-}
+/* -------------------------
+   PAGE CONTAINER / HERO
+   ------------------------- */
+
+.hero-3d{
+    width:var(--container);
+    min-height:560px;
+    margin:0 auto;
+    padding:105px 0 70px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,.92fr);
+    gap:68px;
+    align-items:center;
+}
+
+.hero-3d-copy{
+    min-width:0;
+    order:2;
+}
+
+.hero-simple-media{
+    position:relative;
+    width:100%;
+    min-width:0;
+    height:390px;
+    order:1;
+}
 
-.hero-buttons {
-    gap: 14px;
+.hero-simple-card{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:26px;
+    background:#0c202c;
+    box-shadow:0 20px 50px rgba(0,0,0,.28);
+}
+
+.hero-simple-card img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:1;
+    transition:opacity .22s ease;
+}
+
+.hero-simple-card img.hero-simple-changing{
+    opacity:0;
+}
+
+.hero-simple-overlay{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(
+        180deg,
+        rgba(3,12,18,0) 45%,
+        rgba(3,12,18,.72) 100%
+    );
+}
+
+.hero-simple-label{
+    position:absolute;
+    left:24px;
+    bottom:20px;
+    z-index:2;
+    color:#fff;
+    font-size:24px;
+    font-weight:700;
+    text-shadow:0 3px 15px rgba(0,0,0,.65);
+}
+
+.hero-tag{
+    display:inline-flex;
+    align-items:center;
+    max-width:100%;
+    margin-bottom:22px;
+    padding:9px 16px;
+    border:1px solid rgba(34,197,94,.32);
+    border-radius:999px;
+    background:rgba(18,75,62,.38);
+    color:var(--green);
+    font-size:15px;
+    line-height:1.2;
+    white-space:nowrap;
+}
+
+.hero-3d-copy h1{
+    max-width:700px;
+    margin:0 0 20px;
+    font-size:clamp(40px,4vw,58px);
+    line-height:1.03;
+    letter-spacing:-2.5px;
+    font-weight:800;
+}
+
+.hero-3d-copy p{
+    max-width:610px;
+    margin:0 0 28px;
+    color:#c2d0d8;
+    font-size:17px;
+    line-height:1.6;
+}
+
+.hero-buttons{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
 }
 
 .play-btn,
-.explore-btn {
-    min-height: 54px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+.explore-btn{
+    min-height:54px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:14px 24px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    font-weight:700;
+    transition:transform .2s ease,background .2s ease,border-color .2s ease;
 }
 
-.play-btn {
-    box-shadow: 0 12px 35px rgba(34, 197, 94, .18);
+.play-btn{
+    border-color:rgba(34,197,94,.5);
+    background:linear-gradient(135deg,#0c6b48,#126d52);
 }
 
-.explore-btn {
-    border-color: rgba(255, 255, 255, .18);
-    background: rgba(255, 255, 255, .035);
-    backdrop-filter: blur(10px);
+.explore-btn{
+    background:rgba(70,91,104,.38);
 }
 
-.hero-mini-stats {
-    display: flex;
-    gap: 12px;
-    margin-top: 34px;
+.play-btn:hover,
+.explore-btn:hover{
+    transform:translateY(-2px);
 }
 
-.hero-mini-stats div {
-    min-width: 105px;
-    padding: 12px 15px;
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 14px;
-    background: rgba(255, 255, 255, .035);
-    backdrop-filter: blur(10px);
+.hero-mini-stats{
+    display:flex;
+    gap:14px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.hero-mini-stats > div{
+    min-width:120px;
+    padding:15px 18px;
+    border:1px solid var(--border);
+    border-radius:17px;
+    background:rgba(25,48,62,.72);
 }
 
 .hero-mini-stats strong,
-.hero-mini-stats span {
-    display: block;
+.hero-mini-stats span{
+    display:block;
 }
 
-.hero-mini-stats strong {
-    color: #fff;
-    font-size: 18px;
+.hero-mini-stats strong{
+    margin-bottom:3px;
+    font-size:21px;
 }
 
-.hero-mini-stats span {
-    color: var(--text-muted);
-    font-size: 11px;
-    margin-top: 2px;
+.hero-mini-stats span{
+    color:#94a8b5;
+    font-size:13px;
 }
 
-.hero-image {
-    flex: 1 1 580px;
-    width: min(650px, 52vw);
-    height: 420px;
-    align-items: center;
+.hero-arrow{
+    position:absolute;
+    top:50%;
+    z-index:4;
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:50%;
+    background:rgba(20,42,53,.65);
+    color:#fff;
+    cursor:pointer;
+    transform:translateY(-50%);
+    transition:background .2s ease,transform .2s ease;
 }
 
-.hero-image::before {
-    content: "";
-    position: absolute;
-    inset: 6% 4%;
-    border: 1px solid rgba(255, 255, 255, .10);
-    border-radius: 28px;
-    transform: rotate(2deg);
-    background: rgba(255, 255, 255, .018);
+.hero-arrow:hover{
+    background:rgba(34,197,94,.75);
 }
 
-.hero-visual-glow {
-    position: absolute;
-    width: 78%;
-    height: 78%;
-    background: radial-gradient(circle, rgba(34, 197, 94, .24), transparent 65%);
-    filter: blur(35px);
-    pointer-events: none;
+.hero-arrow.left{left:16px;}
+.hero-arrow.right{right:16px;}
+
+.hero-dots{
+    position:absolute;
+    left:50%;
+    bottom:-32px;
+    z-index:5;
+    display:flex;
+    gap:9px;
+    padding:7px 13px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:rgba(8,23,33,.9);
+    transform:translateX(-50%);
 }
 
-.hero-image img {
-    position: relative;
-    z-index: 2;
-    width: 94%;
-    max-width: 620px;
-    height: 100%;
-    border: 1px solid rgba(255, 255, 255, .13);
-    border-radius: 28px;
-    box-shadow:
-        0 35px 80px rgba(0, 0, 0, .45),
-        0 0 70px rgba(34, 197, 94, .11);
+.hero-dot{
+    width:10px;
+    height:10px;
+    padding:0;
+    border:0;
+    border-radius:50%;
+    background:#64727a;
+    cursor:pointer;
+    transition:transform .2s ease,background .2s ease;
 }
 
-.hero-live-pill {
-    position: absolute;
-    top: 2px;
-    right: 6%;
-    z-index: 4;
-    padding: 9px 13px;
-    border-radius: 999px;
-    background: rgba(8, 19, 31, .86);
-    border: 1px solid rgba(34, 197, 94, .25);
-    color: #dfffea;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.1px;
-    backdrop-filter: blur(12px);
+.hero-dot.active{
+    background:var(--green);
+    transform:scale(1.15);
 }
 
-.hero-live-pill span {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin-right: 7px;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 12px #22c55e;
-    animation: pixaduPulse 1.5s infinite;
+/* -------------------------
+   QUICK PLAY — CENTERED LAYOUT
+   Heading on top, cards underneath.
+   ------------------------- */
+
+.quick-play{
+    width:var(--container);
+    margin:0 auto;
+    padding:45px 0 75px;
 }
 
-.hero-arrow {
-    z-index: 5;
-    width: 44px;
-    height: 44px;
-    background: rgba(8, 19, 31, .75);
-    border: 1px solid rgba(255, 255, 255, .10);
-    backdrop-filter: blur(8px);
+.quick-play-inner{
+    display:block;
+    width:100%;
 }
 
-.hero-arrow:hover {
-    background: var(--primary);
-    box-shadow: 0 0 25px rgba(34, 197, 94, .35);
-}
-
-.hero-dots {
-    z-index: 6;
-    bottom: -28px;
-    padding: 7px 11px;
-    border-radius: 999px;
-    background: rgba(8, 19, 31, .72);
-    border: 1px solid rgba(255, 255, 255, .07);
-    backdrop-filter: blur(8px);
-}
-
-.hero-dot {
-    width: 7px;
-    height: 7px;
-    background: #475569;
-}
-
-.hero-dot.active {
-    width: 22px;
-    border-radius: 99px;
-    transform: none;
-}
-
-/* Quick play strip */
-.quick-play {
-    width: min(1240px, 92%);
-    margin: 10px auto 75px;
-}
-
-.quick-play-inner {
-    display: grid;
-    grid-template-columns: .72fr 1.8fr;
-    gap: 35px;
-    align-items: center;
-    padding: 24px;
-    border: 1px solid rgba(255, 255, 255, .07);
-    border-radius: 24px;
-    background: linear-gradient(100deg, rgba(255, 255, 255, .045), rgba(34, 197, 94, .035));
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .16);
+.quick-play-heading{
+    width:100%;
+    margin:0 auto 32px;
+    text-align:center;
 }
 
 .quick-play-heading span,
-.section-kicker {
-    color: var(--primary);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
+.section-kicker{
+    color:var(--green);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.5px;
 }
 
-.quick-play-heading h2 {
-    margin-top: 5px;
-    font-size: 30px;
+.quick-play-heading h2{
+    max-width:none;
+    margin:7px 0 0;
+    font-size:clamp(34px,4vw,52px);
+    line-height:1.05;
+    letter-spacing:-1.8px;
 }
 
-.quick-play-links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+.quick-play-links{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px;
 }
 
-.quick-play-card {
-    min-height: 82px;
-    padding: 14px;
-    display: grid;
-    grid-template-columns: 44px 1fr 18px;
-    align-items: center;
-    gap: 11px;
-    border: 1px solid rgba(255, 255, 255, .07);
-    border-radius: 17px;
-    background: rgba(8, 19, 31, .55);
-    transition: .3s ease;
+.quick-play-card{
+    min-width:0;
+    min-height:120px;
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    align-items:center;
+    gap:14px;
+    padding:20px 22px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:linear-gradient(
+        145deg,
+        rgba(20,47,61,.82),
+        rgba(13,34,47,.76)
+    );
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
 }
 
-.quick-play-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(34, 197, 94, .35);
-    background: rgba(34, 197, 94, .07);
-    box-shadow: 0 14px 35px rgba(0, 0, 0, .22);
+.quick-play-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(34,197,94,.38);
+    background:linear-gradient(
+        145deg,
+        rgba(22,58,69,.9),
+        rgba(14,39,51,.84)
+    );
 }
 
-.quick-icon {
-    width: 44px;
-    height: 44px;
-    display: grid;
-    place-items: center;
-    border-radius: 13px;
-    background: rgba(34, 197, 94, .10);
-    font-size: 21px;
+.quick-icon{
+    width:42px;
+    display:grid;
+    place-items:center;
+    font-size:29px;
 }
 
 .quick-play-card strong,
-.quick-play-card small {
-    display: block;
+.quick-play-card small{
+    display:block;
+    min-width:0;
 }
 
-.quick-play-card strong {
-    font-size: 14px;
+.quick-play-card strong{
+    font-size:20px;
+    line-height:1.15;
 }
 
-.quick-play-card small {
-    margin-top: 4px;
-    color: var(--text-muted);
-    font-size: 10px;
+.quick-play-card small{
+    margin-top:6px;
+    color:#91a5b1;
+    font-size:12px;
+    line-height:1.3;
 }
 
-.quick-play-card>i {
-    color: #64748b;
-    transition: .3s;
+.quick-play-card > span:last-child{
+    font-size:27px;
+    line-height:1;
+    transition:transform .2s ease;
 }
 
-.quick-play-card:hover>i {
-    color: var(--primary);
-    transform: translateX(3px);
+.quick-play-card:hover > span:last-child{
+    transform:translateX(3px);
 }
 
-/* Featured section */
-.featured {
-    width: 100%;
-    margin: 0 auto;
-    padding: 75px 0 90px;
-}
-
-.featured-heading-row {
-    width: 90%;
-    margin: 0 auto 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 20px;
-}
-
-.featured-heading-row h2 {
-    margin: 5px 0 7px;
-    font-size: clamp(32px, 4vw, 48px);
-    text-align: left;
-}
-
-.featured-heading-row p {
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-.section-view-all {
-    flex-shrink: 0;
-    color: var(--primary);
-    font-weight: 700;
-    font-size: 13px;
-}
-
-.section-view-all i {
-    margin-left: 5px;
-    transition: .25s;
-}
-
-.section-view-all:hover i {
-    transform: translateX(4px);
-}
-
-.featured-slider {
-    width: 100%;
-    padding: 15px 0 30px;
-}
-
-.featured-track {
-    gap: 18px;
-    animation-duration: 32s;
-}
-
-.featured-item {
-    width: 290px;
-    border: 1px solid rgba(255, 255, 255, .07);
-    background: linear-gradient(180deg, #18263a, #111c2d);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, .18);
-}
-
-.featured-item:hover {
-    border-color: rgba(34, 197, 94, .3);
-    box-shadow: 0 22px 45px rgba(0, 0, 0, .32), 0 0 30px rgba(34, 197, 94, .07);
-}
-
-.featured-item img {
-    height: 190px;
-    transition: transform .45s ease, filter .45s ease;
-}
-
-.featured-item:hover img {
-    transform: scale(1.06);
-    filter: saturate(1.12);
-}
-
-.featured-item h3 {
-    padding: 17px 18px 8px;
-    font-size: 19px;
-}
-
-.featured-item a {
-    margin: 0 18px 18px;
-    background: rgba(34, 197, 94, .13);
-    border: 1px solid rgba(34, 197, 94, .25);
-    color: #dfffea;
-    transition: .3s;
-}
-
-.featured-item a:hover {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: 0 0 22px rgba(34, 197, 94, .25);
-}
-
-/* Give the next sections a more deliberate rhythm */
-.features,
-.choose-section,
-.trending {
-    position: relative;
-}
-
-.features {
-    padding-top: 40px;
-}
-
-.choose-section {
-    margin-top: 110px;
-}
-
-.trending {
-    background: linear-gradient(180deg, transparent, rgba(34, 197, 94, .025), transparent);
-}
-
-/* Final CTA */
-.final-cta {
-    position: relative;
-    width: min(1100px, 90%);
-    margin: 100px auto 115px;
-    min-height: 330px;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    border: 1px solid rgba(34, 197, 94, .17);
-    border-radius: 32px;
-    background:
-        radial-gradient(circle at 50% 120%, rgba(34, 197, 94, .18), transparent 55%),
-        linear-gradient(135deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .015));
-    box-shadow: 0 30px 80px rgba(0, 0, 0, .25);
-}
-
-.final-cta::before,
-.final-cta::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(34, 197, 94, .10);
-}
-
-.final-cta::before {
-    width: 380px;
-    height: 380px;
-    right: -120px;
-    top: -200px;
-}
-
-.final-cta::after {
-    width: 260px;
-    height: 260px;
-    left: -100px;
-    bottom: -160px;
-}
-
-.final-cta-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 45px 20px;
-}
-
-.final-cta h2 {
-    margin: 13px 0 12px;
-    font-size: clamp(34px, 5vw, 58px);
-    line-height: 1.05;
-    letter-spacing: -1.5px;
-}
-
-.final-cta h2 span {
-    color: var(--primary);
-}
-
-.final-cta p {
-    max-width: 540px;
-    margin: 0 auto 25px;
-    color: var(--text-light);
-}
-
-.final-cta .play-btn {
-    display: inline-flex;
-}
-
-@keyframes pixaduPulse {
-
-    0%,
-    100% {
-        opacity: 1;
-        transform: scale(1);
+/* Tablet: same structure, comfortably sized. */
+@media (min-width:601px) and (max-width:1100px){
+    .quick-play{
+        width:92%;
+        padding:40px 0 65px;
     }
 
-    50% {
-        opacity: .45;
-        transform: scale(.75);
+    .quick-play-heading{
+        margin-bottom:28px;
+    }
+
+    .quick-play-heading h2{
+        font-size:clamp(32px,4.5vw,46px);
+    }
+
+    .quick-play-links{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:14px;
+    }
+
+    .quick-play-card{
+        min-height:105px;
+        padding:16px 14px;
+        gap:10px;
+        border-radius:18px;
+    }
+
+    .quick-icon{
+        width:34px;
+        font-size:24px;
+    }
+
+    .quick-play-card strong{
+        font-size:17px;
+    }
+
+    .quick-play-card small{
+        margin-top:5px;
+        font-size:10px;
+    }
+
+    .quick-play-card > span:last-child{
+        font-size:23px;
     }
 }
 
-/* Responsive V2 */
-@media (max-width: 1024px) {
-    .hero {
-        min-height: 650px;
+/* Phone: heading remains above the cards, cards stack cleanly. */
+@media (max-width:600px){
+    .quick-play{
+        width:92%;
+        padding:35px 0 55px;
     }
 
-    .hero h1 {
-        font-size: clamp(40px, 5.5vw, 58px);
+    .quick-play-heading{
+        margin-bottom:24px;
     }
 
-    .quick-play-inner {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero {
-        min-height: auto;
-        padding: 125px 0 80px;
+    .quick-play-heading h2{
+        font-size:34px;
     }
 
-    .hero-content {
-        flex: none;
+    .quick-play-links{
+        grid-template-columns:1fr;
+        gap:12px;
     }
 
-    .hero-mini-stats {
-        justify-content: center;
-        flex-wrap: wrap;
+    .quick-play-card{
+        min-height:84px;
+        padding:14px 16px;
+        border-radius:17px;
     }
 
-    .hero-image {
-        flex: none;
-        width: 100%;
-        height: min(52vw, 360px);
-        min-height: 245px;
+    .quick-icon{
+        width:34px;
+        font-size:24px;
     }
 
-    .hero-image img {
-        max-width: 560px;
+    .quick-play-card strong{
+        font-size:17px;
     }
 
-    .quick-play {
-        margin-top: 0;
-    }
-
-    .quick-play-links {
-        grid-template-columns: 1fr;
-    }
-
-    .featured-heading-row {
-        align-items: start;
+    .quick-play-card small{
+        margin-top:4px;
+        font-size:11px;
     }
 }
+/* -------------------------
+   FEATURED GAMES — CLEAN SLIDER
+   ------------------------- */
 
-@media (max-width: 480px) {
-    .hero {
-        width: 90%;
-        padding-top: 112px;
-    }
-
-    .hero h1 {
-        font-size: 2.35rem;
-        letter-spacing: -1.2px;
-    }
-
-    .hero-mini-stats {
-        gap: 7px;
-    }
-
-    .hero-mini-stats div {
-        min-width: 92px;
-        padding: 10px;
-    }
-
-    .hero-image {
-        height: 235px;
-        min-height: 0;
-    }
-
-    .hero-live-pill {
-        right: 0;
-        top: -5px;
-        font-size: 8px;
-    }
-
-    .hero-arrow {
-        width: 38px;
-        height: 38px;
-    }
-
-    .featured-heading-row {
-        width: 90%;
-        display: block;
-    }
-
-    .section-view-all {
-        display: inline-block;
-        margin-top: 12px;
-    }
-
-    .quick-play-inner {
-        padding: 18px;
-    }
-
-    .quick-play-heading h2 {
-        font-size: 25px;
-    }
-
-    .final-cta {
-        min-height: 300px;
-        border-radius: 24px;
-        margin-top: 70px;
-        margin-bottom: 80px;
-    }
+.featured{
+    width:var(--container);
+    margin:0 auto;
+    padding:50px 0 80px;
+    overflow:hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .featured-track {
-        animation: none;
-    }
-
-    .hero-image img,
-    .quick-play-card,
-    .featured-item,
-    .play-btn {
-        transition: none;
-    }
+.featured-heading-row{
+    width:100%;
+    margin:0 0 30px;
 }
 
-
-/* =====================================================
-   HOMEPAGE — REMOVE EXCESSIVE SECTION GAP
-===================================================== */
-
-/* Tighten the bottom of Featured Games */
-.featured {
-    padding-bottom: 28px !important;
+.featured-heading-row .section-kicker{
+    display:block;
+    margin-bottom:8px;
 }
 
-/* Remove the huge empty area before Why Choose Pixadu */
-.features {
-    margin-top: 20px !important;
-    margin-bottom: 80px !important;
+.featured-heading-row h2{
+    margin:0;
+    font-size:clamp(32px,4vw,46px);
+    line-height:1.08;
+    letter-spacing:-1.4px;
 }
 
-/* Keep the heading itself nicely separated from its cards */
-.features h2 {
-    margin-top: 0 !important;
+.featured-heading-row p{
+    margin:9px 0 0;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.5;
 }
 
-/* Mobile spacing */
-@media (max-width: 768px) {
-    .featured {
-        padding-bottom: 20px !important;
-    }
-
-    .features {
-        margin-top: 15px !important;
-        margin-bottom: 60px !important;
-    }
-}
-
-@media (max-width: 427px) {
-    .featured {
-        padding-bottom: 16px !important;
-    }
-
-    .features {
-        margin-top: 10px !important;
-        margin-bottom: 50px !important;
-    }
-}
-
-
-
-/* =====================================================
-   PIXADU — GLASS BUTTONS + HOVER SHINE
-   IMPORTANT:
-   - Navbar/header is NOT modified.
-   - Existing layout/positioning is NOT modified.
-   - Hero arrow positioning is preserved exactly.
-===================================================== */
-
-/* Glass effect — content buttons only */
-.play-btn,
-.explore-btn,
-.recently-played .play-game,
-.featured-item a,
-.choose-btn,
-.play-small,
-.notify-btn {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.20);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.18),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
-        0 8px 25px rgba(0, 0, 0, 0.18);
-}
-
-/* Green glass primary buttons */
-.play-btn,
-.recently-played .play-game,
-.choose-btn,
-.play-small {
-    background: rgba(34, 197, 94, 0.20);
-    border-color: rgba(34, 197, 94, 0.45);
-}
-
-/* Hero arrows — GLASS ONLY.
-   Do NOT change position, top, left, right or transform here. */
-.hero-arrow {
-    overflow: hidden;
-    isolation: isolate;
-    background: rgba(255, 255, 255, 0.10);
-    border-color: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.18),
-        0 8px 25px rgba(0, 0, 0, 0.18);
-}
-
-/* Shine */
-.play-btn::after,
-.explore-btn::after,
-.recently-played .play-game::after,
-.featured-item a::after,
-.choose-btn::after,
-.play-small::after,
-.notify-btn::after,
-.hero-arrow::after {
-    content: "";
-    position: absolute;
-    top: -120%;
-    left: -80%;
-    width: 45%;
-    height: 340%;
-    background: linear-gradient(
-        105deg,
-        transparent 0%,
-        transparent 35%,
-        rgba(255, 255, 255, 0.08) 43%,
-        rgba(255, 255, 255, 0.72) 50%,
-        rgba(255, 255, 255, 0.08) 57%,
-        transparent 65%,
+.featured-slider{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    border-radius:22px;
+    /* Fades the moving row softly at the edges. */
+    -webkit-mask-image:linear-gradient(
+        to right,
+        transparent 0,
+        #000 2.5%,
+        #000 97.5%,
         transparent 100%
     );
-    transform: rotate(18deg) translateX(-180%);
-    transition: transform .7s ease;
-    pointer-events: none;
-    z-index: 10;
-}
-
-/* Hover — normal content buttons */
-.play-btn:hover,
-.explore-btn:hover,
-.recently-played .play-game:hover,
-.featured-item a:hover,
-.choose-btn:hover,
-.play-small:hover,
-.notify-btn:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.42);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.30),
-        0 12px 30px rgba(0, 0, 0, 0.25),
-        0 0 28px rgba(255, 255, 255, 0.10);
-}
-
-/* Green hover */
-.play-btn:hover,
-.recently-played .play-game:hover,
-.choose-btn:hover,
-.play-small:hover {
-    background: rgba(34, 197, 94, 0.28);
-    border-color: rgba(34, 197, 94, 0.65);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        0 12px 30px rgba(0, 0, 0, 0.25),
-        0 0 30px rgba(34, 197, 94, 0.28);
-}
-
-/* Arrow hover — preserve the ORIGINAL vertical centering */
-.hero-arrow:hover {
-    transform: translateY(-50%) scale(1.08);
-    background: rgba(34, 197, 94, 0.22);
-    border-color: rgba(34, 197, 94, 0.60);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        0 0 25px rgba(34, 197, 94, 0.30);
-}
-
-/* Shine sweep */
-.play-btn:hover::after,
-.explore-btn:hover::after,
-.recently-played .play-game:hover::after,
-.featured-item a:hover::after,
-.choose-btn:hover::after,
-.play-small:hover::after,
-.notify-btn:hover::after,
-.hero-arrow:hover::after {
-    transform: rotate(18deg) translateX(520%);
-}
-
-/* Press */
-.play-btn:active,
-.explore-btn:active,
-.recently-played .play-game:active,
-.featured-item a:active,
-.choose-btn:active,
-.play-small:active,
-.notify-btn:active {
-    transform: scale(0.96);
-}
-
-/* Arrow press — preserve vertical centering */
-.hero-arrow:active {
-    transform: translateY(-50%) scale(0.96);
-}
-
-
-/* =====================================================
-   PIXADU — GLASS UI FOR ALL CONTENT BOXES
-   Navbar/header remains controlled by header.css.
-   Layout, sizing and positioning are NOT changed.
-===================================================== */
-
-/* Main content panels / cards */
-.hero-tag,
-.hero-mini-stats > div,
-.quick-play-card,
-.recently-played .game-card,
-.featured-item,
-.feature-card,
-.trend-card,
-.final-cta,
-.section-kicker,
-.hero-live-pill {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.105),
-            rgba(255, 255, 255, 0.035)
-        );
-
-    border: 1px solid rgba(255, 255, 255, 0.16);
-
-    backdrop-filter: blur(16px) saturate(125%);
-    -webkit-backdrop-filter: blur(16px) saturate(125%);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.16),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.035),
-        0 12px 35px rgba(0, 0, 0, 0.18);
-}
-
-/* Slightly stronger glass for the larger cards */
-.recently-played .game-card,
-.featured-item,
-.feature-card,
-.trend-card,
-.final-cta {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.10),
-            rgba(255, 255, 255, 0.025)
-        );
-}
-
-/* Glass highlight at the top of every box */
-.hero-tag::before,
-.hero-mini-stats > div::before,
-.quick-play-card::before,
-.recently-played .game-card::before,
-.featured-item::before,
-.feature-card::before,
-.trend-card::before,
-.final-cta::before,
-.section-kicker::before,
-.hero-live-pill::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 8%;
-    right: 8%;
-    height: 1px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.42),
-        transparent
+    mask-image:linear-gradient(
+        to right,
+        transparent 0,
+        #000 2.5%,
+        #000 97.5%,
+        transparent 100%
     );
-
-    opacity: 0.65;
-    pointer-events: none;
-    z-index: 2;
 }
 
-/* Soft internal light */
-.hero-tag::after,
-.hero-mini-stats > div::after,
-.quick-play-card::after,
-.recently-played .game-card::after,
-.featured-item::after,
-.feature-card::after,
-.trend-card::after,
-.final-cta::after {
-    content: "";
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    top: -110px;
-    right: -80px;
-
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.075),
-        transparent 68%
-    );
-
-    pointer-events: none;
-    z-index: 0;
+.featured-track{
+    display:flex;
+    width:max-content;
+    gap:22px;
+    animation:featuredScroll 32s linear infinite;
+    will-change:transform;
 }
 
-/* Keep actual content above glass effects */
-.hero-tag > *,
-.hero-mini-stats > div > *,
-.quick-play-card > *,
-.recently-played .game-card > *,
-.featured-item > *,
-.feature-card > *,
-.trend-card > *,
-.final-cta > *,
-.section-kicker > *,
-.hero-live-pill > * {
-    position: relative;
-    z-index: 3;
+.featured-slider:hover .featured-track{
+    animation-play-state:paused;
 }
 
-/* Hover = glass gets brighter */
-.hero-tag:hover,
-.hero-mini-stats > div:hover,
-.quick-play-card:hover,
-.recently-played .game-card:hover,
-.featured-item:hover,
-.feature-card:hover,
-.trend-card:hover,
-.final-cta:hover {
-    border-color: rgba(255, 255, 255, 0.28);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.145),
-            rgba(255, 255, 255, 0.045)
-        );
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.22),
-        0 18px 45px rgba(0, 0, 0, 0.25),
-        0 0 28px rgba(255, 255, 255, 0.055);
+.featured-item{
+    width:270px;
+    flex:0 0 270px;
+    overflow:hidden;
+    padding-bottom:17px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:rgba(15,35,47,.9);
+    box-shadow:0 10px 30px rgba(0,0,0,.14);
 }
 
-/* Green Pixadu glow on interactive boxes */
-.quick-play-card:hover,
-.trend-card:hover {
-    border-color: rgba(34, 197, 94, 0.38);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.20),
-        0 18px 45px rgba(0, 0, 0, 0.25),
-        0 0 30px rgba(34, 197, 94, 0.10);
+.featured-item img{
+    display:block;
+    width:100%;
+    height:165px;
+    object-fit:cover;
 }
 
-/* Glass stat boxes */
-.hero-mini-stats > div {
-    transition:
-        transform .3s ease,
-        background .3s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
+.featured-item h3{
+    margin:14px 16px 9px;
+    font-size:18px;
+    line-height:1.2;
 }
 
-.hero-mini-stats > div:hover {
-    transform: translateY(-4px);
+.featured-item a{
+    display:inline-block;
+    margin-left:16px;
+    color:var(--green);
+    font-size:13px;
+    font-weight:700;
 }
 
-/* Featured cards get a subtle glass layer over their images */
-.featured-item img,
-.trend-card img,
-.recently-played .game-card img {
-    position: relative;
-    z-index: 1;
-}
-
-/* Glass feel for the dots container */
-.hero-dots {
-    padding: 8px 13px;
-    border-radius: 999px;
-
-    background: rgba(8, 19, 31, 0.48);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 8px 22px rgba(0, 0, 0, 0.18);
-}
-
-/* Keep dot positioning/animation intact */
-.hero-dots .hero-dot {
-    position: relative;
-    z-index: 2;
-}
-
-/* Glass CTA */
-.final-cta {
-    border-color: rgba(255, 255, 255, 0.18);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.18),
-        0 20px 55px rgba(0, 0, 0, 0.25),
-        0 0 50px rgba(34, 197, 94, 0.07);
-}
-
-/* Glass tag */
-.hero-tag {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(34, 197, 94, 0.16),
-            rgba(255, 255, 255, 0.035)
-        );
-    border-color: rgba(34, 197, 94, 0.28);
-}
-
-/* Glass live pill */
-.hero-live-pill {
-    background: rgba(8, 19, 31, 0.58);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Mobile performance */
-@media (max-width: 768px) {
-    .hero-tag,
-    .hero-mini-stats > div,
-    .quick-play-card,
-    .recently-played .game-card,
-    .featured-item,
-    .feature-card,
-    .trend-card,
-    .final-cta,
-    .section-kicker,
-    .hero-live-pill {
-        backdrop-filter: blur(10px) saturate(120%);
-        -webkit-backdrop-filter: blur(10px) saturate(120%);
+@keyframes featuredScroll{
+    from{
+        transform:translate3d(0,0,0);
+    }
+    to{
+        transform:translate3d(calc(-50% - 11px),0,0);
     }
 }
 
-
-/* =====================================================
-   PIXADU — PREMIUM ANIMATED BACKGROUND
-   Background only — layout and navbar are untouched.
-===================================================== */
-
-html,
-body {
-    background: #050b14;
-}
-
-/* Deep multi-layer ambient background */
-body {
-    position: relative;
-    background:
-        radial-gradient(
-            circle at 78% 18%,
-            rgba(34, 197, 94, 0.18) 0%,
-            rgba(34, 197, 94, 0.07) 20%,
-            transparent 42%
-        ),
-        radial-gradient(
-            circle at 15% 32%,
-            rgba(0, 170, 255, 0.14) 0%,
-            rgba(0, 120, 255, 0.05) 22%,
-            transparent 44%
-        ),
-        radial-gradient(
-            circle at 72% 78%,
-            rgba(139, 92, 246, 0.12) 0%,
-            transparent 38%
-        ),
-        radial-gradient(
-            circle at 28% 92%,
-            rgba(20, 184, 166, 0.10) 0%,
-            transparent 36%
-        ),
-        linear-gradient(
-            135deg,
-            #050b14 0%,
-            #071522 42%,
-            #061b1b 72%,
-            #050b14 100%
-        );
-    background-attachment: fixed;
-}
-
-/* Large soft moving light */
-body::before {
-    content: "";
-    position: fixed;
-    width: 700px;
-    height: 700px;
-    top: -280px;
-    right: -180px;
-
-    background: radial-gradient(
-        circle,
-        rgba(34, 197, 94, 0.13),
-        rgba(34, 197, 94, 0.035) 35%,
-        transparent 70%
-    );
-
-    filter: blur(35px);
-    pointer-events: none;
-    z-index: -1;
-
-    animation: pixaduAmbientGreen 14s ease-in-out infinite alternate;
-}
-
-/* Blue/purple ambient light */
-body::after {
-    content: "";
-    position: fixed;
-    width: 650px;
-    height: 650px;
-    left: -250px;
-    bottom: -280px;
-
-    background: radial-gradient(
-        circle,
-        rgba(59, 130, 246, 0.12),
-        rgba(139, 92, 246, 0.045) 38%,
-        transparent 70%
-    );
-
-    filter: blur(40px);
-    pointer-events: none;
-    z-index: -1;
-
-    animation: pixaduAmbientBlue 18s ease-in-out infinite alternate;
-}
-
-/* Very subtle cinematic grid */
-body {
-    background-image:
-        linear-gradient(
-            rgba(255, 255, 255, 0.018) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.018) 1px,
-            transparent 1px
-        ),
-        radial-gradient(
-            circle at 78% 18%,
-            rgba(34, 197, 94, 0.18),
-            transparent 42%
-        ),
-        radial-gradient(
-            circle at 15% 32%,
-            rgba(0, 170, 255, 0.13),
-            transparent 44%
-        ),
-        radial-gradient(
-            circle at 72% 78%,
-            rgba(139, 92, 246, 0.11),
-            transparent 38%
-        ),
-        linear-gradient(
-            135deg,
-            #050b14 0%,
-            #071522 42%,
-            #061b1b 72%,
-            #050b14 100%
-        );
-
-    background-size:
-        70px 70px,
-        70px 70px,
-        auto,
-        auto,
-        auto,
-        auto;
-}
-
-/* Soft glow behind the hero */
-.hero {
-    position: relative;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 760px;
-    height: 500px;
-    top: 5%;
-    left: 28%;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(34, 197, 94, 0.10),
-            rgba(0, 170, 255, 0.045) 38%,
-            transparent 70%
-        );
-
-    filter: blur(35px);
-    pointer-events: none;
-    z-index: -1;
-
-    animation: pixaduHeroGlow 10s ease-in-out infinite alternate;
-}
-
-/* Ambient light animations */
-@keyframes pixaduAmbientGreen {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate3d(-120px, 100px, 0) scale(1.18);
+/* Desktop: show a clean five-card view. */
+@media (min-width:1101px){
+    .featured-item{
+        width:270px;
+        flex-basis:270px;
     }
 }
 
-@keyframes pixaduAmbientBlue {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1);
+/* Tablet: keep the same horizontal slider, just use smaller cards. */
+@media (min-width:601px) and (max-width:1100px){
+    .featured{
+        width:92%;
+        padding:45px 0 70px;
     }
 
-    100% {
-        transform: translate3d(130px, -90px, 0) scale(1.15);
-    }
-}
-
-@keyframes pixaduHeroGlow {
-    0% {
-        transform: translateX(-35px) scale(0.95);
-        opacity: 0.55;
+    .featured-heading-row{
+        margin-bottom:25px;
     }
 
-    100% {
-        transform: translateX(45px) scale(1.08);
-        opacity: 1;
-    }
-}
-
-/* Keep mobile lighter and smooth */
-@media (max-width: 768px) {
-    body {
-        background-size:
-            55px 55px,
-            55px 55px,
-            auto,
-            auto,
-            auto,
-            auto;
+    .featured-heading-row h2{
+        font-size:38px;
     }
 
-    body::before,
-    body::after {
-        filter: blur(55px);
-        opacity: 0.75;
+    .featured-heading-row p{
+        font-size:14px;
     }
 
-    .hero::before {
-        width: 500px;
-        height: 400px;
+    .featured-track{
+        gap:16px;
+        animation-duration:28s;
     }
-}
 
+    .featured-item{
+        width:230px;
+        flex-basis:230px;
+        padding-bottom:14px;
+        border-radius:18px;
+    }
 
-/* =====================================================
-   PIXADU — SMOOTH HERO SLIDER TRANSITION
-   Added as a safe override layer.
-   Existing layout, arrows and responsive sizing are untouched.
-===================================================== */
+    .featured-item img{
+        height:140px;
+    }
 
-.hero-image img {
-    will-change: opacity, filter;
-    transition:
-        opacity .55s cubic-bezier(.22, .61, .36, 1),
-        filter .55s cubic-bezier(.22, .61, .36, 1);
-}
+    .featured-item h3{
+        margin:12px 14px 8px;
+        font-size:16px;
+    }
 
-/* Outgoing slide */
-.hero-image img.hero-slide-out {
-    opacity: 0;
-    filter: blur(5px);
-}
-
-/* Incoming slide starts soft and blurred */
-.hero-image img.hero-slide-in {
-    opacity: 0;
-    filter: blur(5px);
-}
-
-/* Final visible state */
-.hero-image img.hero-slide-active {
-    opacity: 1;
-    filter: blur(0);
-}
-
-/* Smooth text transition */
-.hero-content {
-    will-change: opacity, filter;
-    transition:
-        opacity .42s cubic-bezier(.22, .61, .36, 1),
-        filter .42s cubic-bezier(.22, .61, .36, 1);
-}
-
-.hero-content.hero-content-out {
-    opacity: 0;
-    filter: blur(3px);
-}
-
-.hero-content.hero-content-in {
-    opacity: 0;
-    filter: blur(3px);
-}
-
-/* Smooth dots */
-.hero-dot {
-    transition:
-        background .35s ease,
-        width .35s ease,
-        transform .35s ease,
-        opacity .35s ease;
-}
-
-/* Respect reduced-motion settings */
-@media (prefers-reduced-motion: reduce) {
-    .hero-image img,
-    .hero-content,
-    .hero-dot {
-        transition: none !important;
+    .featured-item a{
+        margin-left:14px;
     }
 }
 
-/* PIXADU 3D COVERFLOW HERO */
-.hero-3d{width:94%;min-height:720px;margin:auto;padding:120px 1.5% 80px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:center;gap:0;overflow:hidden;position:relative}
-.hero-3d-copy{position:relative;z-index:5;padding-left:0;padding-right:12px}.hero-3d-copy h1{font-size:clamp(38px,4.2vw,62px);max-width:560px}.hero-3d-copy p{max-width:500px}
-.hero-coverflow{position:relative;height:520px;min-width:0;margin-left:-10px}.coverflow-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:1300px;perspective-origin:50% 48%;touch-action:pan-y;cursor:grab}.coverflow-stage:active{cursor:grabbing}.coverflow-track{width:100%;height:100%;position:relative;transform-style:preserve-3d}
-.cover-card{position:absolute;left:50%;top:50%;width:min(350px,31vw);aspect-ratio:16/10;transform-style:preserve-3d;transform:translate(-50%,-50%) translateX(var(--x)) translateZ(var(--z)) rotateY(var(--r)) scale(var(--s));transition:transform .65s cubic-bezier(.2,.8,.2,1),opacity .5s ease;overflow:hidden;border-radius:26px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 25px 65px rgba(0,0,0,.3);backdrop-filter:blur(12px);cursor:pointer}
-.cover-card img{width:100%;height:100%;object-fit:cover;display:block;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:translateZ(0);image-rendering:auto}.cover-card:not(.is-center){filter:saturate(.85) brightness(.72)}.cover-card.is-center{filter:none!important}.cover-card.is-center img{filter:none!important;transform:translateZ(0) scale(1.001);will-change:transform}.cover-card.is-center{border-color:rgba(34,197,94,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 30px 80px rgba(0,0,0,.45),0 0 45px rgba(34,197,94,.16)}
-.cover-shine{position:absolute;inset:-80% -30%;background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.25) 50%,transparent 58%);transform:translateX(-70%) rotate(8deg);transition:transform .8s ease;pointer-events:none}.cover-card:hover .cover-shine{transform:translateX(70%) rotate(8deg)}
-.cover-label{position:absolute;left:16px;right:16px;bottom:14px;padding:10px 14px;border-radius:14px;background:rgba(5,12,20,.58);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px);color:#fff;font-weight:700;text-align:center}
-.hero-3d .hero-arrow{top:50%;z-index:50;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px)}.hero-3d .hero-arrow:hover{background:rgba(34,197,94,.8)}.hero-3d .hero-dots{bottom:18px;z-index:60}.hero-3d .hero-dot{width:9px;height:9px;background:rgba(255,255,255,.25);border:0}.hero-3d .hero-dot.active{background:#22c55e;box-shadow:0 0 14px rgba(34,197,94,.6)}.coverflow-hint{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.38);font-size:9px;letter-spacing:2px;white-space:nowrap}
-@media(max-width:1000px){.hero-3d{grid-template-columns:1fr;min-height:850px;padding-top:130px;gap:10px}.hero-3d-copy{text-align:center;padding:0}.hero-3d-copy p{margin-left:auto;margin-right:auto}.hero-buttons,.hero-mini-stats{justify-content:center}.hero-coverflow{height:500px;margin-left:0}.cover-card{width:min(360px,42vw)}}
-@media(max-width:600px){.hero-3d{width:100%;min-height:760px;padding:110px 15px 55px;gap:5px}.hero-3d-copy h1{font-size:35px}.hero-3d-copy p{font-size:14px;margin-bottom:25px}.hero-coverflow{height:400px}.cover-card{width:270px;backface-visibility:hidden;-webkit-backface-visibility:hidden}.cover-card.is-center{transform:translate(-50%,-50%) translateZ(0) rotateY(0deg) scale(1)!important}.cover-card.is-center img{transform:translateZ(0) scale(1.001)}.hero-3d .hero-arrow{width:40px;height:40px}.hero-3d .hero-arrow.left{left:4px}.hero-3d .hero-arrow.right{right:4px}}
-@media(max-width:380px){.hero-3d{min-height:720px}.hero-coverflow{height:360px}.cover-card{width:235px}}
-
-
-/* =====================================================
-   PIXADU — MOBILE HERO SPACING FIX
-   Reduce the large empty space below the navbar.
-===================================================== */
-@media (max-width: 600px) {
-    .hero-3d {
-        min-height: auto !important;
-        padding: 20px 15px 45px !important;
-        gap: 0 !important;
+/* Phone: smaller cards, still a smooth infinite slider. */
+@media (max-width:600px){
+    .featured{
+        width:92%;
+        padding:40px 0 60px;
     }
 
-    .hero-coverflow {
-        height: 365px !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
+    .featured-heading-row{
+        margin-bottom:22px;
+        text-align:center;
     }
 
-    .hero-3d-copy {
-        padding-top: 8px !important;
-    }
-}
-
-@media (max-width: 380px) {
-    .hero-3d {
-        padding-top: 15px !important;
+    .featured-heading-row h2{
+        font-size:32px;
     }
 
-    .hero-coverflow {
-        height: 340px !important;
-    }
-}
-
-
-/* FINAL MOBILE HERO ORDER + SPACING */
-@media (max-width: 600px) {
-    .hero-3d {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        min-height: auto !important;
-        padding: 15px 15px 45px !important;
-        gap: 0 !important;
+    .featured-heading-row p{
+        font-size:13px;
     }
 
-    /* IMAGE/CAROUSEL MUST BE FIRST */
-    .hero-coverflow {
-        order: 1 !important;
-        width: 100% !important;
-        height: 365px !important;
-        margin: 0 !important;
+    .featured-track{
+        gap:12px;
+        animation-duration:24s;
     }
 
-    /* TEXT/CONTENT MUST BE BELOW IMAGE */
-    .hero-3d-copy {
-        order: 2 !important;
-        width: 100% !important;
-        padding: 8px 0 0 !important;
+    .featured-item{
+        width:205px;
+        flex-basis:205px;
+        border-radius:17px;
+    }
+
+    .featured-item img{
+        height:125px;
+    }
+
+    .featured-item h3{
+        margin:11px 12px 7px;
+        font-size:15px;
+    }
+
+    .featured-item a{
+        margin-left:12px;
+        font-size:12px;
     }
 }
 
-@media (max-width: 380px) {
-    .hero-3d {
-        padding-top: 12px !important;
-    }
-
-    .hero-coverflow {
-        height: 340px !important;
+@media (prefers-reduced-motion:reduce){
+    .featured-track{
+        animation:none;
+        transform:none;
     }
 }
 
+/* -------------------------
+   FEATURES
+   ------------------------- */
 
-/* =====================================================
-   PIXADU — MOBILE HERO TAG FIX
-   Make "Browser Gaming Platform" clean and compact.
-===================================================== */
-@media (max-width: 600px) {
-    .hero-3d-copy {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
+.features{
+    padding:40px 0 90px;
+    text-align:center;
+}
+
+.feature-container{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:28px;
+}
+
+.feature-card{
+    padding:30px 22px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:rgba(16,37,49,.72);
+}
+
+.feature-card i{
+    color:var(--green);
+    font-size:28px;
+}
+
+.feature-card h3{
+    margin:15px 0 8px;
+}
+
+.feature-card p{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+}
+
+/* -------------------------
+   TRENDING GAMES — RESPONSIVE GRID
+   ------------------------- */
+
+.trending{
+    width:var(--container);
+    margin:0 auto;
+    padding:55px 0 85px;
+}
+
+.trending-title{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    margin:0;
+}
+
+.title-line{
+    height:1px;
+    flex:1;
+    background:var(--border);
+}
+
+.trending-title h2{
+    margin:0;
+    white-space:nowrap;
+    font-size:clamp(32px,4vw,48px);
+    line-height:1.08;
+    letter-spacing:-1.5px;
+}
+
+.trending-subtitle{
+    margin:12px auto 34px;
+    color:var(--muted);
+    text-align:center;
+    font-size:16px;
+    line-height:1.5;
+}
+
+/* Equal cards with controlled gaps. */
+.trending-container{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px;
+    width:100%;
+}
+
+.trend-card{
+    min-width:0;
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:rgba(16,37,49,.88);
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+    transition:transform .2s ease,border-color .2s ease;
+}
+
+.trend-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(34,197,94,.34);
+}
+
+.trend-card > img{
+    display:block;
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.trend-info{
+    padding:20px 20px 22px;
+}
+
+.live-badge{
+    display:block;
+    margin-bottom:10px;
+    color:var(--green);
+    font-size:12px;
+    font-weight:700;
+}
+
+.trend-info h3{
+    margin:0 0 7px;
+    font-size:22px;
+    line-height:1.2;
+}
+
+.trend-info p{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+}
+
+.rating{
+    margin:15px 0;
+    font-size:16px;
+}
+
+.play-small{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 17px;
+    border-radius:999px;
+    background:rgba(34,197,94,.15);
+    color:var(--green);
+    font-size:13px;
+    font-weight:700;
+    transition:background .2s ease,transform .2s ease;
+}
+
+.play-small:hover{
+    background:rgba(34,197,94,.23);
+    transform:translateY(-1px);
+}
+
+/* Tablet — 3 equal cards with smaller gaps. */
+@media (min-width:601px) and (max-width:1100px){
+    .trending{
+        width:92%;
+        padding:45px 0 70px;
     }
 
-    .hero-3d-copy .hero-tag {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: auto !important;
-        max-width: calc(100% - 24px) !important;
-        padding: 8px 13px !important;
-        margin: 0 auto 16px !important;
-        border-radius: 999px !important;
-        font-size: 12px !important;
-        line-height: 1.2 !important;
-        letter-spacing: 0 !important;
-        white-space: nowrap !important;
-        box-sizing: border-box !important;
+    .trending-title{
+        gap:15px;
     }
 
-    .hero-3d-copy .hero-tag::before {
-        left: 12% !important;
-        right: 12% !important;
+    .trending-title h2{
+        font-size:38px;
+    }
+
+    .trending-subtitle{
+        margin-bottom:27px;
+        font-size:14px;
+    }
+
+    .trending-container{
+        gap:16px;
+    }
+
+    .trend-card{
+        border-radius:18px;
+    }
+
+    .trend-card > img{
+        height:170px;
+    }
+
+    .trend-info{
+        padding:16px;
+    }
+
+    .trend-info h3{
+        font-size:18px;
+    }
+
+    .trend-info p{
+        font-size:12px;
     }
 }
 
-@media (max-width: 380px) {
-    .hero-3d-copy .hero-tag {
-        padding: 7px 11px !important;
-        font-size: 11px !important;
-        margin-bottom: 14px !important;
+/* Small tablet / large phone — 2 columns. */
+@media (min-width:601px) and (max-width:800px){
+    .trending-container{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:15px;
+    }
+
+    .trend-card > img{
+        height:155px;
     }
 }
 
-
-/* =====================================================
-   PIXADU — 1024px HERO SPACING
-   Keep the 3D layout, but prevent the copy/carousel
-   from colliding at tablet-sized desktop widths.
-===================================================== */
-@media (min-width: 601px) and (max-width: 1100px) {
-
-    .hero-3d {
-        width: 94% !important;
-        min-height: 650px !important;
-        padding: 90px 2% 55px !important;
-        grid-template-columns: minmax(0, 44%) minmax(0, 56%) !important;
-        gap: 0 !important;
-        align-items: center !important;
+/* Phone — one clean card per row. */
+@media (max-width:600px){
+    .trending{
+        width:92%;
+        padding:40px 0 60px;
     }
 
-    .hero-3d-copy {
-        padding-left: 0 !important;
-        padding-right: 18px !important;
-        z-index: 5 !important;
+    .trending-title{
+        justify-content:center;
+        gap:0;
     }
 
-    .hero-3d-copy h1 {
-        max-width: 470px !important;
-        font-size: clamp(38px, 4.8vw, 52px) !important;
-        line-height: 1.05 !important;
+    .title-line{
+        display:none;
     }
 
-    .hero-3d-copy p {
-        max-width: 420px !important;
-        font-size: 17px !important;
-        line-height: 1.5 !important;
+    .trending-title h2{
+        white-space:normal;
+        text-align:center;
+        font-size:32px;
     }
 
-    .hero-buttons {
-        gap: 12px !important;
-        flex-wrap: nowrap !important;
+    .trending-subtitle{
+        margin:10px auto 24px;
+        font-size:13px;
     }
 
-    .hero-buttons a,
-    .hero-buttons button {
-        min-width: 175px !important;
+    .trending-container{
+        grid-template-columns:1fr;
+        gap:14px;
     }
 
-    .hero-coverflow {
-        height: 470px !important;
-        margin-left: -8px !important;
-        min-width: 0 !important;
+    .trend-card{
+        border-radius:18px;
     }
 
-    .coverflow-stage {
-        perspective: 1150px !important;
-        perspective-origin: 50% 48% !important;
+    .trend-card > img{
+        height:190px;
     }
 
-    .cover-card {
-        width: min(315px, 30vw) !important;
+    .trend-info{
+        padding:16px 17px 18px;
+    }
+
+    .trend-info h3{
+        font-size:19px;
+    }
+
+    .trend-info p{
+        font-size:13px;
     }
 }
 
-
-/* =====================================================
-   PIXADU — FINAL 601–1100px SHORT-VIEWPORT HERO FIX
-   Optimized for laptop/tablet landscape screens such as
-   1024 × 472 without changing normal desktop/mobile.
-===================================================== */
-@media (min-width: 601px) and (max-width: 1100px) and (max-height: 650px) {
-
-    .hero-3d {
-        width: 94% !important;
-        min-height: 450px !important;
-        height: 450px !important;
-        padding: 22px 1% 18px !important;
-        grid-template-columns: minmax(0, 50%) minmax(0, 50%) !important;
-        align-items: center !important;
-        gap: 0 !important;
+/* Very small phones */
+@media (max-width:430px){
+    .trend-card > img{
+        height:175px;
     }
 
-    .hero-3d-copy {
-        align-self: center !important;
-        padding: 0 16px 0 0 !important;
-    }
-
-    /* Keep the Browser Gaming Platform pill below the navbar.
-       It was being covered at 1024 × 472. */
-    .hero-3d-copy .hero-tag {
-        position: relative !important;
-        z-index: 20 !important;
-        transform: translateY(10px) !important;
-        margin-bottom: 22px !important;
-        padding: 8px 14px !important;
-        font-size: 13px !important;
-        line-height: 1.2 !important;
-        white-space: nowrap !important;
-    }
-
-    .hero-3d-copy h1 {
-        max-width: none !important;
-        margin: 0 0 14px !important;
-        font-size: clamp(36px, 3.9vw, 42px) !important;
-        line-height: 1.02 !important;
-        white-space: nowrap !important;
-        letter-spacing: -1.5px !important;
-    }
-
-    .hero-3d-copy p {
-        max-width: 390px !important;
-        margin: 0 0 18px !important;
-        font-size: 15px !important;
-        line-height: 1.4 !important;
-    }
-
-    .hero-buttons {
-        gap: 10px !important;
-        margin: 0 !important;
-        flex-wrap: nowrap !important;
-    }
-
-    .hero-buttons a,
-    .hero-buttons button {
-        min-width: 155px !important;
-        min-height: 50px !important;
-        padding: 12px 22px !important;
-    }
-
-    .hero-mini-stats {
-        gap: 8px !important;
-        margin-top: 16px !important;
-    }
-
-    .hero-mini-stats div {
-        min-width: 92px !important;
-        padding: 9px 11px !important;
-    }
-
-    .hero-mini-stats strong {
-        font-size: 16px !important;
-    }
-
-    .hero-mini-stats span {
-        font-size: 10px !important;
-    }
-
-    .hero-coverflow {
-        height: 360px !important;
-        margin: 0 !important;
-    }
-
-    .cover-card {
-        width: min(300px, 29vw) !important;
-    }
-
-    .hero-3d .hero-arrow {
-        width: 42px !important;
-        height: 42px !important;
-    }
-
-    .hero-3d .hero-dots {
-        bottom: 2px !important;
+    .trend-info{
+        padding:15px;
     }
 }
 
+/* -------------------------
+   FINAL CTA
+   ------------------------- */
 
-/* =====================================================
-   PIXADU — MAIN HERO TITLE ONE-LINE FIX
-===================================================== */
-@media (min-width: 1101px) {
-    .hero-3d-copy h1 {
-        max-width: none !important;
-        white-space: nowrap !important;
-        font-size: clamp(52px, 4.2vw, 68px) !important;
-        letter-spacing: -2px !important;
-        line-height: 1 !important;
+.final-cta{
+    position:relative;
+    margin-bottom:80px;
+    padding:70px 25px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:28px;
+    background:linear-gradient(135deg,rgba(10,57,53,.8),rgba(10,32,45,.9));
+    text-align:center;
+}
+
+.final-cta-content{
+    position:relative;
+    z-index:2;
+}
+
+.final-cta h2{
+    margin:15px 0;
+    font-size:clamp(35px,5vw,58px);
+    line-height:1.05;
+}
+
+.final-cta h2 span{
+    color:var(--green);
+}
+
+.final-cta p{
+    margin:0 auto 25px;
+    max-width:560px;
+    color:var(--muted);
+}
+
+.final-cta-glow{
+    position:absolute;
+    inset:-100px;
+    pointer-events:none;
+    background:radial-gradient(circle,rgba(34,197,94,.13),transparent 55%);
+}
+
+/* -------------------------
+   REVEAL / CURSOR
+   ------------------------- */
+
+.reveal{
+    opacity:1;
+    transform:none;
+}
+
+.reveal:not(.active){
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .45s ease,transform .45s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:none;
+    transition:opacity .45s ease,transform .45s ease;
+}
+
+.cursor-glow{
+    position:fixed;
+    left:-120px;
+    top:-120px;
+    width:180px;
+    height:180px;
+    pointer-events:none;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(34,197,94,.08),transparent 68%);
+    transform:translate(-50%,-50%);
+    z-index:-1;
+}
+
+/* -------------------------
+   TABLET — 1024px
+   This is intentionally simple:
+   image and text are separate grid
+   columns with a guaranteed gap.
+   ------------------------- */
+
+@media (min-width:901px) and (max-width:1100px){
+    .hero-3d{
+        width:94%;
+        min-height:520px;
+        padding:120px 0 65px;
+        grid-template-columns:minmax(0,48%) minmax(0,52%);
+        gap:34px;
+    }
+
+    .hero-simple-media{
+        height:315px;
+    }
+
+    .hero-3d-copy h1{
+        font-size:clamp(34px,4vw,44px);
+        letter-spacing:-1.5px;
+    }
+
+    .hero-3d-copy p{
+        font-size:15px;
+        line-height:1.5;
+    }
+
+    .hero-buttons{
+        gap:10px;
+    }
+
+    .play-btn,
+    .explore-btn{
+        min-height:50px;
+        padding:12px 17px;
+    }
+
+    .hero-mini-stats{
+        gap:9px;
+        margin-top:22px;
+    }
+
+    .hero-mini-stats > div{
+        min-width:100px;
+        padding:12px 13px;
+    }
+
+    .quick-play-inner{
+        grid-template-columns:1fr;
+    }
+
+    .quick-play-links{
+        grid-template-columns:repeat(3,1fr);
     }
 }
 
-@media (min-width: 601px) and (max-width: 1100px) {
-    .hero-3d-copy h1 {
-        max-width: none !important;
-        white-space: nowrap !important;
+/* Short 1024×472 DevTools viewport */
+@media (min-width:901px) and (max-width:1100px) and (max-height:600px){
+    .hero-3d{
+        min-height:500px;
+        padding-top:125px;
+        padding-bottom:65px;
+        gap:34px;
+    }
+
+    .hero-simple-media{
+        height:300px;
+    }
+
+    .hero-3d-copy h1{
+        font-size:34px;
+    }
+
+    .hero-3d-copy p{
+        margin-bottom:18px;
+    }
+
+    .hero-mini-stats{
+        margin-top:17px;
     }
 }
 
+/* -------------------------
+   MOBILE
+   ------------------------- */
 
-/* =====================================================
-   PIXADU — 768px HERO SPACING FIX
-   Keep tablet layout compact without affecting mobile.
-===================================================== */
-@media (min-width: 601px) and (max-width: 800px) {
-
-    .hero-3d {
-        width: 94% !important;
-        min-height: 470px !important;
-        height: 470px !important;
-        padding: 28px 1% 24px !important;
-        grid-template-columns: minmax(0, 45%) minmax(0, 55%) !important;
-        align-items: center !important;
-        gap: 0 !important;
+@media (max-width:900px){
+    .hero-3d{
+        width:92%;
+        min-height:auto;
+        padding:125px 0 80px;
+        grid-template-columns:1fr;
+        gap:42px;
     }
 
-    .hero-3d-copy {
-        padding: 0 10px 0 0 !important;
-        align-self: center !important;
+    .hero-3d-copy{
+        order:1;
+        text-align:center;
     }
 
-    .hero-3d-copy .hero-tag {
-        margin-bottom: 16px !important;
-        padding: 7px 11px !important;
-        font-size: 11px !important;
-        line-height: 1.15 !important;
-        white-space: nowrap !important;
+    .hero-simple-media{
+        order:2;
+        height:min(58vw,390px);
     }
 
-    .hero-3d-copy h1 {
-        max-width: none !important;
-        margin: 0 0 12px !important;
-        font-size: clamp(30px, 4.2vw, 38px) !important;
-        line-height: 1.02 !important;
-        white-space: nowrap !important;
-        letter-spacing: -1.2px !important;
+    .hero-3d-copy h1{
+        font-size:clamp(38px,8vw,54px);
+        letter-spacing:-1.5px;
     }
 
-    .hero-3d-copy p {
-        max-width: 310px !important;
-        margin: 0 0 16px !important;
-        font-size: 14px !important;
-        line-height: 1.4 !important;
+    .hero-3d-copy p{
+        margin-left:auto;
+        margin-right:auto;
     }
 
-    .hero-buttons {
-        gap: 8px !important;
-        flex-wrap: nowrap !important;
+    .hero-tag{
+        white-space:normal;
+        justify-content:center;
     }
 
-    .hero-buttons a,
-    .hero-buttons button {
-        min-width: 0 !important;
-        width: auto !important;
-        min-height: 42px !important;
-        height: 42px !important;
-        padding: 8px 14px !important;
-        font-size: 13px !important;
-        line-height: 1 !important;
-        white-space: nowrap !important;
-        flex: 0 0 auto !important;
+    .hero-buttons,
+    .hero-mini-stats{
+        justify-content:center;
     }
 
-    .hero-buttons {
-        gap: 7px !important;
-        flex-wrap: nowrap !important;
-        width: max-content !important;
-        max-width: 100% !important;
+    .quick-play,
+    .featured,
+    .features,
+    .trending,
+    .final-cta{
+        width:92%;
     }
 
-    .hero-mini-stats {
-        gap: 6px !important;
-        margin-top: 13px !important;
+    .quick-play-links{
+        grid-template-columns:1fr;
     }
 
-    .hero-mini-stats div {
-        min-width: 72px !important;
-        padding: 8px 8px !important;
+    .feature-container,
+    .trending-container{
+        grid-template-columns:1fr;
+    }
+}
+
+@media (max-width:600px){
+    .hero-3d{
+        padding-top:105px;
+        gap:35px;
     }
 
-    .hero-mini-stats strong {
-        font-size: 14px !important;
+    .hero-simple-media{
+        height:250px;
     }
 
-    .hero-mini-stats span {
-        font-size: 9px !important;
+    .hero-simple-card{
+        border-radius:18px;
     }
 
-    .hero-coverflow {
-        height: 330px !important;
-        margin: 0 !important;
+    .hero-simple-label{
+        left:17px;
+        bottom:15px;
+        font-size:19px;
     }
 
-    .cover-card {
-        width: min(250px, 30vw) !important;
+    .hero-arrow{
+        width:42px;
+        height:42px;
     }
 
-    .hero-3d .hero-arrow {
-        width: 38px !important;
-        height: 38px !important;
+    .hero-arrow.left{left:10px;}
+    .hero-arrow.right{right:10px;}
+
+    .hero-dots{
+        bottom:-29px;
     }
 
-    .hero-3d .hero-dots {
-        bottom: 0 !important;
+    .hero-3d-copy h1{
+        font-size:35px;
+    }
+
+    .hero-3d-copy p{
+        font-size:15px;
+    }
+
+    .play-btn,
+    .explore-btn{
+        width:100%;
+    }
+
+    .hero-mini-stats{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        width:100%;
+    }
+
+    .hero-mini-stats > div{
+        min-width:0;
+        padding:12px 8px;
+    }
+
+    .featured-item{
+        width:210px;
+        flex-basis:210px;
+    }
+
+    .trending-title{
+        gap:10px;
+    }
+
+    .title-line{
+        display:none;
+    }
+
+    .trending-title h2{
+        width:100%;
+        text-align:center;
+    }
+}
+
+@media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+
+    *,
+    *::before,
+    *::after{
+        animation:none !important;
+        transition:none !important;
+    }
+
+    .reveal,
+    .reveal:not(.active),
+    .reveal.active{
+        opacity:1;
+        transform:none;
     }
 }
 
 
 /* =========================================================
-   PIXADU — FINAL UNIVERSAL RESPONSIVE LAYOUT
+   HERO — REFINED PROPORTIONS
+   Smaller visual footprint + more breathing room.
    ========================================================= */
 
-html,
-body {
+@media (min-width:1101px){
+    .hero-3d{
+        max-width:1180px;
+    }
+
+    .hero-simple-media{
+        max-width:620px;
+        height:390px;
+        justify-self:start;
+    }
+
+    .hero-3d-copy{
+        max-width:560px;
+        justify-self:end;
+    }
+
+    .hero-3d-copy h1{
+        max-width:560px;
+    }
+
+    .hero-3d-copy p{
+        max-width:520px;
+    }
+}
+
+
+/* =========================================================
+   TABLET — 601px to 900px
+   Keep the laptop-style side-by-side hero.
+   The image is intentionally compact so the hero doesn't
+   become a giant vertical section on tablets.
+   ========================================================= */
+
+@media (min-width:601px) and (max-width:900px){
+    .hero-3d{
+        width:92%;
+        min-height:470px;
+        padding:110px 0 65px;
+        grid-template-columns:minmax(0,46%) minmax(0,54%);
+        gap:28px;
+        align-items:center;
+    }
+
+    /* Same visual order as laptop: image LEFT, text RIGHT. */
+    .hero-simple-media{
+        order:1;
+        width:100%;
+        height:270px;
+        max-width:100%;
+        justify-self:start;
+    }
+
+    .hero-3d-copy{
+        order:2;
+        width:100%;
+        min-width:0;
+        text-align:left;
+    }
+
+    .hero-tag{
+        margin-bottom:15px;
+        padding:8px 13px;
+        font-size:13px;
+    }
+
+    .hero-3d-copy h1{
+        max-width:100%;
+        margin-bottom:14px;
+        font-size:clamp(30px,5vw,39px);
+        line-height:1.06;
+        letter-spacing:-1.2px;
+    }
+
+    .hero-3d-copy p{
+        max-width:100%;
+        margin-bottom:19px;
+        font-size:14px;
+        line-height:1.45;
+    }
+
+    .hero-buttons{
+        justify-content:flex-start;
+        gap:9px;
+    }
+
+    .play-btn,
+    .explore-btn{
+        min-height:46px;
+        padding:11px 14px;
+        font-size:13px;
+    }
+
+    .hero-mini-stats{
+        justify-content:flex-start;
+        gap:7px;
+        margin-top:17px;
+        flex-wrap:nowrap;
+    }
+
+    .hero-mini-stats > div{
+        min-width:0;
+        flex:1 1 0;
+        padding:10px 9px;
+    }
+
+    .hero-mini-stats strong{
+        font-size:17px;
+    }
+
+    .hero-mini-stats span{
+        font-size:11px;
+    }
+
+    .hero-arrow{
+        width:40px;
+        height:40px;
+    }
+
+    .hero-arrow.left{left:9px;}
+    .hero-arrow.right{right:9px;}
+
+    .hero-dots{
+        bottom:-27px;
+    }
+}
+
+/* Short tablet viewport such as 768 × 472. */
+@media (min-width:601px) and (max-width:900px) and (max-height:600px){
+    .hero-3d{
+        min-height:430px;
+        padding-top:105px;
+        padding-bottom:55px;
+        gap:26px;
+    }
+
+    .hero-simple-media{
+        height:250px;
+    }
+
+    .hero-3d-copy h1{
+        font-size:32px;
+    }
+
+    .hero-3d-copy p{
+        font-size:13px;
+        margin-bottom:15px;
+    }
+
+    .hero-mini-stats{
+        margin-top:14px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES — 600px AND BELOW
+   Keep 639px+ tablet layout untouched.
+   At smaller widths: IMAGE FIRST, TEXT SECOND.
+   ========================================================= */
+
+@media (max-width:639px){
+    .hero-3d{
+        width:92%;
+        min-height:auto;
+        padding:100px 0 70px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:38px;
+    }
+
+    /* Move the game image to the top. */
+    .hero-simple-media{
+        order:1;
+        width:100%;
+        height:220px;
+        max-width:430px;
+        flex:none;
+    }
+
+    .hero-simple-card{
+        width:100%;
+        height:100%;
+        border-radius:18px;
+    }
+
+    /* Put all text content underneath the image. */
+    .hero-3d-copy{
+        order:2;
+        width:100%;
+        max-width:520px;
+        text-align:center;
+    }
+
+    .hero-tag{
+        margin-bottom:15px;
+        justify-content:center;
+        font-size:13px;
+    }
+
+    .hero-3d-copy h1{
+        width:100%;
+        max-width:520px;
+        margin:0 auto 15px;
+        font-size:clamp(30px,8vw,38px);
+        line-height:1.08;
+        letter-spacing:-1px;
+    }
+
+    .hero-3d-copy p{
+        width:100%;
+        max-width:460px;
+        margin:0 auto 20px;
+        font-size:14px;
+        line-height:1.5;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+        width:100%;
+        gap:10px;
+    }
+
+    .play-btn,
+    .explore-btn{
+        width:auto;
+        min-height:46px;
+        padding:11px 15px;
+        font-size:13px;
+    }
+
+    .hero-mini-stats{
+        width:100%;
+        max-width:430px;
+        margin:20px auto 0;
+        justify-content:center;
+        gap:7px;
+    }
+
+    .hero-mini-stats > div{
+        min-width:0;
+        flex:1 1 0;
+        padding:10px 7px;
+    }
+
+    .hero-mini-stats strong{
+        font-size:17px;
+    }
+
+    .hero-mini-stats span{
+        font-size:10px;
+    }
+
+    .hero-arrow{
+        width:38px;
+        height:38px;
+    }
+
+    .hero-arrow.left{left:9px;}
+    .hero-arrow.right{right:9px;}
+
+    .hero-dots{
+        bottom:-27px;
+    }
+}
+
+/* Extra-small phones: make the image compact rather than tall. */
+@media (max-width:430px){
+    .hero-3d{
+        padding-top:92px;
+        gap:34px;
+    }
+
+    .hero-simple-media{
+        height:195px;
+        max-width:390px;
+    }
+
+    .hero-3d-copy h1{
+        font-size:31px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .play-btn,
+    .explore-btn{
+        width:100%;
+    }
+}
+
+
+/* =========================================================
+   QUICK PLAY — 601px to 900px
+   Keep the same horizontal layout as desktop/1024px.
+   ========================================================= */
+
+@media (min-width:601px) and (max-width:900px){
+    .quick-play{
+        width:92%;
+        padding:35px 0 65px;
+    }
+
+    .quick-play-inner{
+        grid-template-columns:minmax(210px,.62fr) minmax(0,1.38fr);
+        gap:28px;
+        align-items:center;
+    }
+
+    .quick-play-heading{
+        text-align:left;
+    }
+
+    .quick-play-heading h2{
+        max-width:260px;
+        font-size:clamp(30px,4.8vw,42px);
+        line-height:1.05;
+    }
+
+    .quick-play-links{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .quick-play-card{
+        min-height:94px;
+        grid-template-columns:auto minmax(0,1fr) auto;
+        gap:8px;
+        padding:13px 11px;
+        border-radius:17px;
+    }
+
+    .quick-icon{
+        width:30px;
+        font-size:22px;
+    }
+
+    .quick-play-card strong{
+        font-size:16px;
+    }
+
+    .quick-play-card small{
+        margin-top:4px;
+        font-size:10px;
+    }
+
+    .quick-play-card > span:last-child{
+        font-size:21px;
+    }
+}
+
+/* =========================================================
+   WHY CHOOSE PIXADU — RESPONSIVE CLEANUP
+   ========================================================= */
+.features{
+    width:var(--container);
+    max-width:1400px;
+    margin:0 auto;
+    padding:70px 0 90px;
+    text-align:center;
+}
+
+.features > h2{
+    margin:0;
+    font-size:clamp(30px,3.2vw,44px);
+    line-height:1.1;
+    letter-spacing:-1px;
+}
+
+.feature-container{
     width:100%;
-    max-width:100%;
-    overflow-x:hidden !important;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px;
+    margin:32px auto 0;
 }
 
-img { max-width:100%; }
-
-/* Desktop: image and content side-by-side */
-@media (min-width:901px) {
-    .hero-3d {
-        display:grid !important;
-        grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr) !important;
-        align-items:center !important;
-    }
-
-    .hero-coverflow { order:2 !important; }
-    .hero-3d-copy { order:1 !important; }
+.feature-card{
+    min-width:0;
+    min-height:205px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:30px 26px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:rgba(16,37,49,.78);
+    box-sizing:border-box;
 }
 
-/* 601–900px tablets:
-   IMAGE TOP, CONTENT BELOW */
-@media (min-width:601px) and (max-width:900px) {
-    .hero-3d {
-        width:94% !important;
-        min-height:auto !important;
-        height:auto !important;
-        padding:92px 15px 45px !important;
-        display:flex !important;
-        flex-direction:column !important;
-        align-items:stretch !important;
-        gap:0 !important;
-        overflow:hidden !important;
+.feature-card i{
+    display:block;
+    margin-bottom:12px;
+    font-size:30px;
+}
+
+.feature-card h3{
+    margin:0 0 10px;
+    font-size:22px;
+    line-height:1.2;
+}
+
+.feature-card p{
+    max-width:340px;
+    margin:0;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.55;
+}
+
+/* 1024px and smaller: keep the same 3-card design, with tighter gaps. */
+@media (min-width:701px) and (max-width:1100px){
+    .features{
+        width:92%;
+        padding:60px 0 80px;
     }
 
-    .hero-coverflow {
-        order:1 !important;
-        width:100% !important;
-        height:clamp(300px,42vw,390px) !important;
-        margin:0 !important;
-        flex:0 0 auto !important;
+    .feature-container{
+        gap:16px;
+        margin-top:28px;
     }
 
-    .hero-3d-copy {
-        order:2 !important;
-        width:100% !important;
-        padding:12px 0 0 !important;
-        display:flex !important;
-        flex-direction:column !important;
-        align-items:center !important;
-        text-align:center !important;
+    .feature-card{
+        min-height:190px;
+        padding:26px 18px;
+        border-radius:18px;
     }
 
-    .hero-3d-copy .hero-tag {
-        margin:0 auto 12px !important;
-        font-size:12px !important;
-        padding:7px 12px !important;
-        white-space:nowrap !important;
+    .feature-card h3{
+        font-size:19px;
     }
 
-    .hero-3d-copy h1 {
-        width:100% !important;
-        max-width:none !important;
-        margin:0 0 10px !important;
-        font-size:clamp(30px,4.6vw,40px) !important;
-        line-height:1.05 !important;
-        white-space:nowrap !important;
-        letter-spacing:-1px !important;
-    }
-
-    .hero-3d-copy p {
-        max-width:650px !important;
-        margin:0 auto 16px !important;
-        font-size:14px !important;
-        line-height:1.45 !important;
-    }
-
-    .hero-buttons {
-        width:auto !important;
-        max-width:100% !important;
-        display:flex !important;
-        justify-content:center !important;
-        align-items:center !important;
-        gap:8px !important;
-        flex-wrap:nowrap !important;
-    }
-
-    .hero-buttons a,
-    .hero-buttons button {
-        width:auto !important;
-        min-width:0 !important;
-        min-height:42px !important;
-        height:42px !important;
-        padding:8px 15px !important;
-        font-size:13px !important;
-        line-height:1 !important;
-        white-space:nowrap !important;
-        flex:0 0 auto !important;
-    }
-
-    .hero-mini-stats {
-        justify-content:center !important;
-        gap:7px !important;
-        margin-top:13px !important;
-        flex-wrap:nowrap !important;
-    }
-
-    .hero-mini-stats div {
-        min-width:78px !important;
-        padding:8px 9px !important;
-    }
-
-    .hero-mini-stats strong { font-size:14px !important; }
-    .hero-mini-stats span { font-size:9px !important; }
-
-    .hero-3d .hero-arrow {
-        width:40px !important;
-        height:40px !important;
-    }
-
-    .hero-3d .hero-dots { bottom:0 !important; }
-
-    .feature-container {
-        display:grid !important;
-        grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-        gap:18px !important;
-    }
-
-    .feature-card {
-        min-width:0 !important;
-        padding:30px 20px !important;
-    }
-
-    .feature-card h3 { font-size:21px !important; }
-    .feature-card p { font-size:13px !important; }
-
-    .trending-container {
-        width:92% !important;
-        padding:25px !important;
-        gap:20px !important;
+    .feature-card p{
+        font-size:14px;
     }
 }
 
-/* <=600px phones:
-   IMAGE TOP, CONTENT BELOW */
-@media (max-width:600px) {
-    .hero-3d {
-        width:100% !important;
-        min-height:auto !important;
-        height:auto !important;
-        padding:78px 14px 42px !important;
-        display:flex !important;
-        flex-direction:column !important;
-        align-items:stretch !important;
-        gap:0 !important;
+/* 700px and below: stack cleanly instead of squeezing three cards. */
+@media (max-width:700px){
+    .features{
+        width:92%;
+        padding:52px 0 70px;
     }
 
-    .hero-coverflow {
-        order:1 !important;
-        width:100% !important;
-        height:clamp(285px,88vw,355px) !important;
-        margin:0 !important;
-        flex:0 0 auto !important;
+    .features > h2{
+        font-size:32px;
     }
 
-    .hero-3d-copy {
-        order:2 !important;
-        width:100% !important;
-        padding:8px 0 0 !important;
-        display:flex !important;
-        flex-direction:column !important;
-        align-items:center !important;
-        text-align:center !important;
+    .feature-container{
+        grid-template-columns:1fr;
+        gap:16px;
+        margin-top:25px;
     }
 
-    .hero-3d-copy .hero-tag {
-        width:fit-content !important;
-        max-width:calc(100% - 10px) !important;
-        margin:0 auto 12px !important;
-        padding:7px 11px !important;
-        font-size:11px !important;
-        line-height:1.2 !important;
-        white-space:nowrap !important;
+    .feature-card{
+        min-height:175px;
+        padding:26px 22px;
+        border-radius:18px;
     }
 
-    .hero-3d-copy h1 {
-        width:100% !important;
-        max-width:100% !important;
-        margin:0 0 10px !important;
-        font-size:clamp(27px,8vw,35px) !important;
-        line-height:1.08 !important;
-        letter-spacing:-1px !important;
-        white-space:normal !important;
+    .feature-card h3{
+        font-size:20px;
     }
 
-    .hero-3d-copy p {
-        width:100% !important;
-        max-width:430px !important;
-        margin:0 auto 16px !important;
-        font-size:13px !important;
-        line-height:1.45 !important;
+    .feature-card p{
+        max-width:420px;
+        font-size:14px;
+    }
+}
+
+@media (max-width:420px){
+    .features{
+        width:90%;
+        padding-top:45px;
     }
 
-    .hero-buttons {
-        width:100% !important;
-        display:flex !important;
-        justify-content:center !important;
-        gap:7px !important;
-        flex-wrap:nowrap !important;
+    .features > h2{
+        font-size:29px;
     }
 
-    .hero-buttons a,
-    .hero-buttons button {
-        min-width:0 !important;
-        width:auto !important;
-        height:40px !important;
-        min-height:40px !important;
-        padding:7px 12px !important;
-        font-size:12px !important;
-        line-height:1 !important;
-        white-space:nowrap !important;
-        flex:0 1 auto !important;
+    .feature-card{
+        min-height:165px;
+        padding:24px 18px;
     }
+}
 
-    .hero-mini-stats {
-        width:100% !important;
-        justify-content:center !important;
-        gap:6px !important;
-        margin-top:12px !important;
-        flex-wrap:nowrap !important;
-    }
 
-    .hero-mini-stats div {
-        min-width:0 !important;
-        width:30% !important;
-        padding:8px 5px !important;
-    }
+/* =====================================================
+   PIXADU — READY WHEN YOU ARE CTA RESPONSIVE SPACING
+   Navbar/header and other sections remain unchanged
+===================================================== */
 
-    .hero-mini-stats strong { font-size:14px !important; }
-    .hero-mini-stats span { font-size:8px !important; }
+.final-cta {
+    position: relative;
+    width: min(1180px, 92vw);
+    min-height: 360px;
+    margin: 55px auto 65px;
+    padding: 58px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+}
 
-    .hero-3d .hero-arrow {
-        width:38px !important;
-        height:38px !important;
-    }
+.final-cta-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 850px;
+    margin-inline: auto;
+}
 
-    .hero-3d .hero-arrow.left { left:3px !important; }
-    .hero-3d .hero-arrow.right { right:3px !important; }
-    .hero-3d .hero-dots { bottom:0 !important; }
+.final-cta h2 {
+    max-width: 820px;
+    margin: 20px auto 14px;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+}
 
-    .cover-card {
-        width:min(270px,72vw) !important;
-    }
+.final-cta p {
+    max-width: 620px;
+    margin: 0 auto 25px;
+    line-height: 1.5;
+}
 
-    /* No more squeezed feature cards */
-    .features {
-        width:calc(100% - 28px) !important;
-        margin:65px auto !important;
-    }
+.final-cta .play-btn {
+    margin-inline: auto;
+}
 
-    .features h2 {
-        font-size:clamp(28px,8vw,38px) !important;
-        margin-bottom:30px !important;
-    }
 
-    .feature-container {
-        display:grid !important;
-        grid-template-columns:1fr !important;
-        gap:14px !important;
-    }
-
-    .feature-card {
-        width:100% !important;
-        min-width:0 !important;
-        padding:28px 22px !important;
-    }
-
-    .feature-card i {
-        font-size:42px !important;
-        margin-bottom:16px !important;
-    }
-
-    .feature-card h3 {
-        font-size:22px !important;
-        margin-bottom:10px !important;
-    }
-
-    .feature-card p {
-        font-size:13px !important;
-        line-height:1.6 !important;
-    }
-
-    /* Clean one-column trending cards */
-    .trending {
-        padding:60px 0 !important;
-    }
-
-    .trending-container {
-        width:calc(100% - 28px) !important;
-        padding:14px !important;
-        grid-template-columns:1fr !important;
-        gap:14px !important;
-    }
-
-    .trend-card {
-        width:100% !important;
-        min-width:0 !important;
-    }
-
-    .trend-card img {
-        height:auto !important;
-        aspect-ratio:16 / 9 !important;
-    }
-
-    .trend-info { padding:18px !important; }
-    .trend-info h3 { font-size:20px !important; }
-    .trend-info p {
-        font-size:12px !important;
-        margin:10px 0 !important;
-    }
-
-    .play-small {
-        padding:10px 18px !important;
-        font-size:12px !important;
-    }
-
-    .quick-play {
-        width:calc(100% - 28px) !important;
-        margin-left:auto !important;
-        margin-right:auto !important;
-    }
-
-    .quick-play-links {
-        grid-template-columns:1fr !important;
-    }
-
+/* Laptop and medium screens */
+@media (min-width: 901px) and (max-width: 1100px) {
     .final-cta {
-        width:calc(100% - 28px) !important;
-        margin-left:auto !important;
-        margin-right:auto !important;
+        width: 92%;
+        min-height: 330px;
+        margin: 45px auto 60px;
+        padding: 48px 24px;
+    }
+
+    .final-cta h2 {
+        max-width: 700px;
+        margin-top: 17px;
+        font-size: clamp(38px, 5.2vw, 52px);
+    }
+
+    .final-cta p {
+        max-width: 540px;
+        margin-bottom: 22px;
+        font-size: 14px;
     }
 }
 
-/* Very small phones */
-@media (max-width:380px) {
-    .hero-3d {
-        padding-left:10px !important;
-        padding-right:10px !important;
+
+/* Tablet screens */
+@media (min-width: 601px) and (max-width: 900px) {
+    .final-cta {
+        width: 92%;
+        min-height: 300px;
+        margin: 40px auto 55px;
+        padding: 42px 22px;
     }
 
-    .hero-coverflow { height:285px !important; }
-    .cover-card { width:235px !important; }
+    .final-cta h2 {
+        max-width: 620px;
+        margin: 16px auto 12px;
+        font-size: 42px;
+        letter-spacing: -1px;
+    }
 
-    .hero-buttons a,
-    .hero-buttons button {
-        padding-left:10px !important;
-        padding-right:10px !important;
-        font-size:11px !important;
+    .final-cta p {
+        max-width: 500px;
+        margin-bottom: 20px;
+        font-size: 14px;
     }
 }
+
+
+/* Mobile screens */
+@media (max-width: 600px) {
+    .final-cta {
+        width: 92%;
+        min-height: 300px;
+        margin: 32px auto 48px;
+        padding: 40px 17px;
+    }
+
+    .final-cta h2 {
+        margin: 16px auto 12px;
+        font-size: clamp(32px, 8.5vw, 40px);
+        line-height: 1.08;
+        letter-spacing: -.7px;
+    }
+
+    .final-cta p {
+        max-width: 390px;
+        margin-bottom: 21px;
+        font-size: 13px;
+    }
+}
+
+
+/* Small phones */
+@media (max-width: 430px) {
+    .final-cta {
+        min-height: 285px;
+        margin-top: 28px;
+        padding: 35px 14px;
+    }
+
+    .final-cta h2 {
+        font-size: 31px;
+    }
+
+    .final-cta p {
+        font-size: 12.5px;
+    }
+
+    .final-cta .play-btn {
+        width: 100%;
+    }
+}
+
+/* FEATURED GAMES — CENTER ONLY THE TEXT */
+
+.featured > .section-kicker {
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.featured .featured-heading-row {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.featured .featured-heading-row > div {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.featured .featured-heading-row h2 {
+    text-align: center;
+}
+
+.featured .featured-heading-row p {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+

@@ -243,7 +243,7 @@
     <section class="hero hero-3d reveal" id="homeHero">
         <div class="hero-3d-copy">
             <span class="hero-tag">🎮 Browser Gaming Platform</span>
-            <h1 id="heroTitle">Build. Explore. Survive⛏️</h1>
+            <h1 id="heroTitle">Build. Explore. Survive</h1>
             <p id="heroDescription">Build, explore and survive in an endless block world.</p>
             <div class="hero-buttons">
                 <a id="heroPlayBtn" href="minecraft.html" class="play-btn"><i class="fa-solid fa-play"></i> Start
@@ -256,14 +256,25 @@
                 <div><strong>⚡</strong><span>Instant Play</span></div>
             </div>
         </div>
-        <div class="hero-coverflow">
-            <button id="prevHero" class="hero-arrow left"><i class="fa-solid fa-chevron-left"></i></button>
-            <div class="coverflow-stage" id="coverflowStage">
-                <div class="coverflow-track" id="coverflowTrack"></div>
+        <div class="hero-simple-media">
+            <div class="hero-simple-card">
+                <img id="heroSimpleImage"
+                     src="images/minecraft.png"
+                     alt="Minecraft"
+                     fetchpriority="high"
+                     decoding="async">
+                <div class="hero-simple-overlay"></div>
+                <div class="hero-simple-label" id="heroSimpleLabel">Minecraft</div>
             </div>
-            <button id="nextHero" class="hero-arrow right"><i class="fa-solid fa-chevron-right"></i></button>
+
+            <button id="prevHero" class="hero-arrow left" aria-label="Previous game">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="nextHero" class="hero-arrow right" aria-label="Next game">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
             <div class="hero-dots" id="heroDots"></div>
-            <div class="coverflow-hint">DRAG • SWIPE • SCROLL</div>
         </div>
     </section>
 
